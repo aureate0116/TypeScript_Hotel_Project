@@ -1,0 +1,111 @@
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+  font-weight: bold;
+}
+p {
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+/**** scrollbar ****/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-button {
+  background: transparent;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #94c1eb;
+  //   border: 1px solid rgb(155, 192, 229);
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: transparent;
+}
+/**** end scrollbar ****/
+
+// 通用每個 section
+.site_section {
+  min-height: 400px;
+  padding: 150px;
+  padding-left: 200px; //保留 menu 位置
+}
+
+.site_button {
+  border-radius: 500px;
+  padding: 5px 30px;
+  color: white;
+  font-weight: bold;
+  margin: 16px 0px;
+}
+
+.site_pattern1 {
+  min-width: 200px;
+  min-height: 300px;
+  border-radius: 0px 0px 100px 100px;
+}
+.site_pattern2 {
+  min-width: 200px;
+  min-height: 300px;
+  border-radius: 0px 200px 200px 0px;
+}
+.site_pattern3 {
+  min-width: 200px;
+  min-height: 50px;
+  border-radius: 0px 0px 100px 100px;
+}
+
+// dot
+.site_pattern4 {
+  width: 300px;
+  height: 300px;
+  border-radius: 100%;
+  //   border-radius: 200px 0px 0px 200px;
+}
+.site_position_right {
+  position: absolute;
+  right: -50px;
+}
+
+// .overlay {
+//     position: relative;
+// }
+// .overlay::before {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: rgba(0, 0, 0, 0.4);
+//     z-index: -1;
+// }
+
+// .text-justify {
+//     text-align: justify; /*　Firefox到此即可對齊　*/
+//     text-justify: auto;  /*　IE需再加上此行　*/
+// }
+
+// .lh-875 {
+//     line-height: 1.875;
+// }
+
+// .-mx-12 {
+//     margin-left: -12px !important;
+//     margin-right: -12px !important;
+// }

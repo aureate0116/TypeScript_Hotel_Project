@@ -1,0 +1,19 @@
+// Bootstrap
+@import "bootstrap/scss/functions";
+@import "utils/variables"; // 自定義變數
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/bootstrap";
+
+
+//通用
+@import "utils/utils";
+
+// layout
+// @import "./layout/mainLayout.scss";
+
+
+//pages
+// @import "./pages/homeIndex.scss";
+// @import "./pages/aboutIndex.scss";
+
+// @import "@/assets/css/pages/solutionRFID.scss";
