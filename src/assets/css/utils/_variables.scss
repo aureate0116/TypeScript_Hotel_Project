@@ -1,7 +1,12 @@
 // 顏色變數
-$primary: #006ED4;
+$primary: #BF9D7D;
+$primaryDark:#7B6651;
+  
+
 // $secondary: #5ECC4C;
-$secondary: #40af2f;
+$secondary: #7B6651;
+$black:#140F0A; //bg
+
 $light: #efefef ;// #ececec; 
 $success: #198754;
 $info: #0dcaf0;
@@ -9,8 +14,11 @@ $warning: #ffc107;
 $danger: #dc3545;
 $dark: #555;   //用於文字
 
+
+
 // 新增的顏色
-$lightPrimary : #94C1EB;
+$lightPrimary : #BF9D7D;
+
 $lightSecondary: #ADE1A4;
 // $primaryDark: #251E33;
 // $primaryLight: #3e2e5f;
@@ -36,6 +44,7 @@ $theme-colors: (
   //自定義名稱主題
   "lightPrimary": $lightPrimary,
   "lightSecondary": $lightSecondary,
+  "black":$black,
   // "primaryDark": $primaryDark,
   // "primaryLight": $primaryLight,
   "gray":$gray,
@@ -57,16 +66,17 @@ $font-sizes: (
   9: 10px,
 ) !default;
 
-$spacer: 1rem !default;
+// $spacer: 1rem !default;
 $spacers: (
   0: 0,
-  1: $spacer * .25,
-  2: $spacer * .5,
-  3: $spacer,
-  4: $spacer * 1.5,
-  5: $spacer * 3,
-  6: $spacer * 3.5,
-  7: 70px,
+  1: 4px, //
+  2: 8px,  //8px
+  3: 16px, // 16px
+  4: 20px, //24px
+  5: 24px, //48px
+  6: 30px, //56px
+  7: 40px,
+  8:  80px,
 ) !default;
 
 $container-max-widths: (

@@ -2,11 +2,11 @@ import '@/assets/css/site.scss'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 // import axios from 'axios'
 // import VueAxios from 'vue-axios'
 
 import '@/assets/css/site.scss'
+
 import 'bootstrap' //JS
 
 import App from './App.vue'
