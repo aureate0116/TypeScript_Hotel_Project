@@ -19,28 +19,28 @@ h1 {
 }
 
 /**** scrollbar ****/
-::-webkit-scrollbar {
-  width: 8px;
-}
+// ::-webkit-scrollbar {
+//   width: 8px;
+// }
 
-::-webkit-scrollbar-button {
-  background: transparent;
-  border-radius: 4px;
-}
+// ::-webkit-scrollbar-button {
+//   background: transparent;
+//   border-radius: 4px;
+// }
 
-::-webkit-scrollbar-track-piece {
-  background: transparent;
-}
+// ::-webkit-scrollbar-track-piece {
+//   background: transparent;
+// }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #94c1eb;
-  //   border: 1px solid rgb(155, 192, 229);
-}
+// ::-webkit-scrollbar-thumb {
+//   border-radius: 4px;
+//   background-color: #94c1eb;
+//   //   border: 1px solid rgb(155, 192, 229);
+// }
 
-::-webkit-scrollbar-track {
-  box-shadow: transparent;
-}
+// ::-webkit-scrollbar-track {
+//   box-shadow: transparent;
+// }
 /**** end scrollbar ****/
 
 // 通用每個 section

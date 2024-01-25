@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      // name: 'home',
       component: () => import('@/views/MainLayout.vue'),
       meta: { breadcrumb: '' },
       children:[

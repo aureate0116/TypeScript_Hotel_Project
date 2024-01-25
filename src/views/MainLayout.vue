@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid p-0">
-    <nav class="navbar layout_navbar navbar-expand-lg py-3 px-7 fixed-top">
+  <div class="container-fluid p-0 overflow-hidden">
+    <nav class="navbar site_layout_navbar navbar-expand-lg py-3 px-7 fixed-top">
       <div class="container-fluid">
         <router-link class="navbar-brand mx-0" to="/"
           ><img
@@ -39,6 +39,12 @@
       </div>
     </nav>
 
+    <main class="site_mainContent">
+      <div class="content">
+        <RouterView />
+      </div>
+    </main>
+
     <footer class="site_footer bg-black text-white">
       <div class="row g-3">
         <div class="col-auto flex-fill">
@@ -73,7 +79,8 @@
     </footer>
   </div>
 </template>
-<script>
+
+<script lang="ts">
 // import { defineComponent } from '@vue/composition-api'
 
 export default {
