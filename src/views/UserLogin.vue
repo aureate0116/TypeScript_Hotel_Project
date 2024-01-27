@@ -1,54 +1,142 @@
 <template>
   <span class="text-primary">享樂酒店，誠摯歡迎</span>
   <h1 class="mb-7">立即開始旅程</h1>
-  <div class="row g-2 d-flex flex-column">
-    <!-- <div class="col">
-    </div> -->
 
-    <div class="col mb-3">
-      <label class="form-label" for="email">電子信箱</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        placeholder="hello@exsample.com"
-        required
-      />
-    </div>
-    <div class="col mb-3">
-      <label class="form-label" for="password">密碼</label>
-      <input type="password" class="form-control" id="email" placeholder="請輸入密碼" required />
-
-      <div class="mt-3 d-flex justify-content-between">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-          <label class="form-check-label" for="flexCheckDefault"> 記住帳號</label>
+  <v-form ref="myForm" v-slot="{ errors }">
+    <div class="row g-2 d-flex flex-column">
+      <div class="col mb-3">
+        <label class="form-label" for="email">電子信箱</label>
+        <v-field
+          name="email"
+          id="email"
+          type="email"
+          class="form-control"
+          :class="{ 'is-invalid': errors['email'] }"
+          label="帳號"
+          placeholder="hello@exsample.com"
+          v-model="userAccount.email"
+          rules="required"
+        />
+        <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="col mb-3">
+        <label class="form-label" for="password">密碼</label>
+        <v-field
+          name="password"
+          type="password"
+          class="form-control"
+          :class="{ 'is-invalid': errors['password'] }"
+          id="password"
+          placeholder="請輸入密碼"
+          v-model="userAccount.password"
+          rules="required"
+        />
+        <ErrorMessage name="password" class="invalid-feedback"></ErrorMessage>
+        <div class="mt-3 d-flex justify-content-between">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="isRememberAccount"
+              v-model="loginSetting.isRememberAccount"
+            />
+            <label class="form-check-label" for="isRememberAccount"> 記住帳號</label>
+          </div>
+          <span class="text-decoration-underline text-primary pointer">忘記密碼？</span>
         </div>
-        <span class="text-decoration-underline text-primary pointer">忘記密碼？</span>
+      </div>
+      <div class="col mb-3">
+        <button
+          type="button"
+          class="btn py-3 btn-white w-100 site_button text-gray"
+          @click="userLogin"
+        >
+          會員登入
+        </button>
+      </div>
+      <div class="col mb-3">
+        <span class="pointer me-2">沒有會員嗎?</span>
+        <router-link
+          :to="{ name: 'register' }"
+          role="button"
+          class="text-decoration-underline text-primary pointer"
+          >前往註冊</router-link
+        >
       </div>
     </div>
-    <div class="col mb-3">
-      <button type="button" class="btn py-3 btn-white w-100 site_button text-gray">會員登入</button>
-    </div>
-    <div class="col mb-3">
-      <span class="pointer me-2">沒有會員嗎?</span>
-      <router-link
-        :to="{ name: 'register' }"
-        role="button"
-        class="text-decoration-underline text-primary pointer"
-        >前往註冊</router-link
-      >
-    </div>
-  </div>
+  </v-form>
 </template>
 
 <script lang="ts">
+const apiUrl = import.meta.env.VITE_BACKEND_HOST
+
 export default {
   data() {
-    return {}
+    return {
+      userAccount: {
+        email: '' as string,
+        password: '' as string
+      },
+      loginSetting: {
+        isRememberAccount: false
+      }
+      //   apiUrl:``
+    }
   },
-  methods: {},
-  mounted() {}
+  methods: {
+    userLogin() {
+      let data = this.userAccount
+      let headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+      console.log('this.userAccount', this.userAccount)
+      console.log('data', data)
+      //   console.log('apiUrl', apiUrl)
+      this.$axios
+        .post(
+          `${apiUrl}user/login`,
+          data,
+          { headers }
+          // , {
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     Accept: 'application/json'
+          //   }
+          // }
+        )
+        .then((res) => {
+          console.log('res', res)
+          console.log('res', JSON.stringify(res.data))
+          document.cookie = `loginToken=${res.data.token};  path=/ ;`
+          document.cookie = `userInfo=${res.data.result};  path=/ ;`
+
+          this.$router.push({ name: 'home' })
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+
+      if (this.loginSetting.isRememberAccount == true) {
+        document.cookie = `userEmail=${this.userAccount.email};  path=/ ;`
+      }
+      //   axios
+      //     .post(`${apiUrl}user/check`, data, { headers })
+      //     .then((res) => {
+      //       console.log('res', res)
+      //       console.log('res', JSON.stringify(res.data))
+      //     })
+      //     .catch((err) => {
+      //       console.log('err', err)
+      //     })
+      //   console.log(import.meta.env.MODE) // 開發模式還是生產模式
+      //   console.log(import.meta.env.VITE_BACKEND_HOST) // 從 .env 中獲取的後端主機
+    }
+  },
+  mounted() {
+    // this.userLogin()
+  }
 }
 // export default defineComponent({
 //     setup() {

@@ -117,6 +117,18 @@
 
     <div class="col mb-3">
       <label class="form-label" for="address">地址</label>
+
+      <div class="twzipcode"></div>
+      <input type="text" class="address" id="address" />
+      <textarea name="" id="textarea"></textarea>
+      <button type="button" id="btn" class="btn">地址產生器</button>
+
+      <!-- <div class="twzipcode">
+        <select data-role="county"></select>
+        <select data-role="district"></select>
+        <input type="hidden" data-role="zipcode" />
+      </div> -->
+
       <div class="d-flex">
         <select id="address" class="form-select mb-3">
           <option selected>Open this select menu</option>
@@ -161,6 +173,9 @@
 </template>
 
 <script lang="ts">
+// TWzipcode.js https://code.essoduke.org/twzipcode/#n-download
+import Twzipcode from 'twzipcode.js'
+
 export default {
   data() {
     return {
@@ -175,7 +190,10 @@ export default {
 
     saveRegisterData() {}
   },
-  mounted() {}
+  mounted() {
+    const twzipcode = new Twzipcode('.twzipcode')
+    console.log('twzipcode', twzipcode.database)
+  }
 }
 // export default defineComponent({
 //     setup() {
