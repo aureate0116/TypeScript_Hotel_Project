@@ -1,5 +1,5 @@
-body{
-  font-family: 'Noto Serif TC'
+body {
+  font-family: 'Noto Serif TC';
 }
 
 h1,
@@ -41,50 +41,57 @@ h1 {
 // ::-webkit-scrollbar-track {
 //   box-shadow: transparent;
 // }
+
 /**** end scrollbar ****/
 
 // 通用每個 section
-.site_section {
-  min-height: 400px;
-  padding: 150px;
-  padding-left: 200px; //保留 menu 位置
-}
+// .site_section {
+//   min-height: 400px;
+//   padding: 150px;
+//   padding-left: 200px; //保留 menu 位置
+// }
 
-.site_button {
-  border-radius: 500px;
-  padding: 5px 30px;
+// .site_button {
+//   border-radius: 500px;
+//   padding: 5px 30px;
+//   color: white;
+//   font-weight: bold;
+//   margin: 16px 0px;
+// }
+
+.site_button:hover {
+  background-color: #bf9d7d;
+  border-color: #bf9d7d;
   color: white;
-  font-weight: bold;
-  margin: 16px 0px;
 }
 
-.site_pattern1 {
-  min-width: 200px;
-  min-height: 300px;
-  border-radius: 0px 0px 100px 100px;
-}
-.site_pattern2 {
-  min-width: 200px;
-  min-height: 300px;
-  border-radius: 0px 200px 200px 0px;
-}
-.site_pattern3 {
-  min-width: 200px;
-  min-height: 50px;
-  border-radius: 0px 0px 100px 100px;
-}
+// .site_pattern1 {
+//   min-width: 200px;
+//   min-height: 300px;
+//   border-radius: 0px 0px 100px 100px;
+// }
+// .site_pattern2 {
+//   min-width: 200px;
+//   min-height: 300px;
+//   border-radius: 0px 200px 200px 0px;
+// }
+// .site_pattern3 {
+//   min-width: 200px;
+//   min-height: 50px;
+//   border-radius: 0px 0px 100px 100px;
+// }
 
-// dot
-.site_pattern4 {
-  width: 300px;
-  height: 300px;
-  border-radius: 100%;
-  //   border-radius: 200px 0px 0px 200px;
-}
-.site_position_right {
-  position: absolute;
-  right: -50px;
-}
+// // dot
+// .site_pattern4 {
+//   width: 300px;
+//   height: 300px;
+//   border-radius: 100%;
+//   //   border-radius: 200px 0px 0px 200px;
+// }
+// .site_position_right {
+//   position: absolute;
+//   right: -50px;
+// }
 
 // .overlay {
 //     position: relative;

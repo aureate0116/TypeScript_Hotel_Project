@@ -9,12 +9,20 @@
       <div class="col text-primary">
         <h2 class="">享樂酒店</h2>
         <h5 class="mt-2">Enjoyment Luxury Hotel</h5>
-        <div class="border-bottom pt-7"></div>
+        <div class="border_bottom pt-7"></div>
       </div>
       <div class="col text-white">
         <h1 class="fs-10">高雄<br />豪華住宿之選</h1>
         <p class="fs-10">我們致力於為您提供無與倫比的奢華體驗與優質服務</p>
-        <button type="button" class="btn btn-lg btn-white"></button>
+        
+        
+        <button type="button" class="btn btn-lg btn-white section_banner_button">
+           
+            立即訂房
+            <p class="border_center border-bottom border-black"></p>
+           
+          
+        </button>
       </div>
     </div>
   </div>

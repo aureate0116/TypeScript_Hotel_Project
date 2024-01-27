@@ -1,9 +1,22 @@
 .section_banner {
   padding: 236px 80px 166px 80px;
 
-  .border-bottom {
+  .border_bottom {
     border-bottom: 2px solid;
     border-image: linear-gradient(to right, #bf9d7d, #fff) 1;
     border-image-slice: 10; //漸層切片大小
+  }
+
+
+  .section_banner_button{
+    min-width: 776px;
+    height: 116px;
+    align-items: right;
+
+  }
+
+  .border_center{
+    border-bottom: 2px solid;
+    width: 150px;
   }
 }
