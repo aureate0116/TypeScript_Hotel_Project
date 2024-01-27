@@ -1,9 +1,10 @@
 <template>
+  <span class="text-primary">享樂酒店，誠摯歡迎</span>
+  <h1 class="mb-7">立即開始旅程</h1>
   <div class="row g-2 d-flex flex-column">
-    <div class="col">
-      <span class="text-primary">享樂酒店，誠摯歡迎</span>
-      <h1 class="mb-7">立即開始旅程</h1>
-    </div>
+    <!-- <div class="col">
+    </div> -->
+
     <div class="col mb-3">
       <label class="form-label" for="email">電子信箱</label>
       <input
@@ -27,7 +28,7 @@
       </div>
     </div>
     <div class="col mb-3">
-      <button type="button" class="btn py-2 btn-white w-100 site_button text-gray">會員登入</button>
+      <button type="button" class="btn py-3 btn-white w-100 site_button text-gray">會員登入</button>
     </div>
     <div class="col mb-3">
       <span class="pointer me-2">沒有會員嗎?</span>
@@ -44,18 +45,10 @@
 <script lang="ts">
 export default {
   data() {
-    return {
-      isScrolled: false
-    }
+    return {}
   },
-  methods: {
-    // handleScroll() {
-    //   this.isScrolled = window.scrollY > 0
-    // }
-  },
-  mounted() {
-    // window.addEventListener('scroll', this.handleScroll)
-  }
+  methods: {},
+  mounted() {}
 }
 // export default defineComponent({
 //     setup() {
@@ -64,5 +57,6 @@ export default {
 // })
 </script>
 <style scoped="scss">
+@import '@/assets/css/utils/utils.scss';
 @import '@/assets/css/pages/LoginLayout.scss';
 </style>
