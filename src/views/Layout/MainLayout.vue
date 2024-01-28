@@ -28,7 +28,7 @@
               <a class="nav-link text-white" href="#">客房旅宿</a>
             </li>
             <li class="nav-item px-3">
-              <a class="nav-link text-white" href="#">會員登入</a>
+              <router-link :to="{name:'login'}" class="nav-link text-white" href="#">會員登入</router-link>
             </li>
 
             <li class="nav-item px-3">

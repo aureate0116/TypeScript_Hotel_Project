@@ -50,5 +50,5 @@ export default {
 // })
 </script>
 <style scoped="scss">
-@import '@/assets/css/pages/LoginLayout.scss';
+@import '@/assets/css/layout/LoginLayout.scss';
 </style>

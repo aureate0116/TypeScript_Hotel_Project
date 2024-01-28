@@ -6,13 +6,13 @@ const router = createRouter({
   routes: [
     {
       path: '/login',
-      name: 'login',
+      name: '',
       component: () => import('@/views/Layout/LoginLayout.vue'),
       // meta: { breadcrumb: '' },
       children: [
         {
           path: '',
-          // name: 'home',
+          name: 'login',
           component: () => import('@/views/UserLogin.vue')
         },
         {

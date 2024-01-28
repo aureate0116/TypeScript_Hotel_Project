@@ -5,7 +5,11 @@
     "composite": true,
     "lib": [],
     "types": ["node", "jsdom"],
-    "module": "esnext"
-  },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/utils/axiosInterceptor.js"]
+    "module": "es2022",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },  
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/utils/axiosInterceptor.js"],
 }

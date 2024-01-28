@@ -2,7 +2,7 @@
   <span class="text-primary">享樂酒店，誠摯歡迎</span>
   <h1 class="mb-7">立即開始旅程</h1>
 
-  <v-form ref="myForm" v-slot="{ errors }">
+  <v-form ref="myForm" v-slot="{ errors }" @submit="userLogin()">
     <div class="row g-2 d-flex flex-column">
       <div class="col mb-3">
         <label class="form-label" for="email">電子信箱</label>
@@ -24,6 +24,7 @@
         <v-field
           name="password"
           type="password"
+          label="密碼"
           class="form-control"
           :class="{ 'is-invalid': errors['password'] }"
           id="password"
@@ -70,6 +71,9 @@
 
 <script lang="ts">
 const apiUrl = import.meta.env.VITE_BACKEND_HOST
+import { mapActions, mapState } from 'pinia'
+import { userAuthStore } from '@/stores/userAuthStore'
+// import { useAlertStore } from '@/stores/alertStore'
 
 export default {
   data() {
@@ -81,10 +85,11 @@ export default {
       loginSetting: {
         isRememberAccount: false
       }
-      //   apiUrl:``
     }
   },
   methods: {
+    ...mapActions(userAuthStore, ['getUserEmail']),
+
     userLogin() {
       let data = this.userAccount
       let headers = {
@@ -94,57 +99,44 @@ export default {
       console.log('this.userAccount', this.userAccount)
       console.log('data', data)
       //   console.log('apiUrl', apiUrl)
-      this.$axios
-        .post(
-          `${apiUrl}user/login`,
-          data,
-          { headers }
-          // , {
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     Accept: 'application/json'
-          //   }
-          // }
-        )
-        .then((res) => {
-          console.log('res', res)
-          console.log('res', JSON.stringify(res.data))
-          document.cookie = `loginToken=${res.data.token};  path=/ ;`
-          document.cookie = `userInfo=${res.data.result};  path=/ ;`
 
-          this.$router.push({ name: 'home' })
-        })
-        .catch((err) => {
-          console.log('err', err)
-        })
+      this.$refs.myForm.validate().then((result) => {
+        if (result.valid) {
+          this.axios
+            .post(`${apiUrl}user/login`, data, { headers })
+            .then((res) => {
+              console.log('res', res)
+              console.log('res', JSON.stringify(res.data))
+              document.cookie = `loginToken=${res.data.token};  path=/ ;`
+              document.cookie = `userInfo=${res.data.result};  path=/ ;`
 
+              this.$router.push({ name: 'home' })
+            })
+            .catch((err) => {
+              console.log('err', err)
+            })
+        }
+      })
+
+      // 是否記住帳號判斷
       if (this.loginSetting.isRememberAccount == true) {
         document.cookie = `userEmail=${this.userAccount.email};  path=/ ;`
+      } else {
+        document.cookie = 'userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
       }
-      //   axios
-      //     .post(`${apiUrl}user/check`, data, { headers })
-      //     .then((res) => {
-      //       console.log('res', res)
-      //       console.log('res', JSON.stringify(res.data))
-      //     })
-      //     .catch((err) => {
-      //       console.log('err', err)
-      //     })
-      //   console.log(import.meta.env.MODE) // 開發模式還是生產模式
-      //   console.log(import.meta.env.VITE_BACKEND_HOST) // 從 .env 中獲取的後端主機
     }
   },
   mounted() {
-    // this.userLogin()
+    // let rem = this.getUserEmail()
+    // console.log('rem', rem)
+    if (this.getUserEmail()) {
+      this.loginSetting.isRememberAccount = true
+      this.userAccount.email = this.getUserEmail()
+    }
   }
 }
-// export default defineComponent({
-//     setup() {
-
-//     },
-// })
 </script>
 <style scoped="scss">
 @import '@/assets/css/utils/utils.scss';
-@import '@/assets/css/pages/LoginLayout.scss';
+@import '@/assets/css/layout/LoginLayout.scss';
 </style>

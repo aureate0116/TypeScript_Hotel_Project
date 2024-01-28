@@ -45,11 +45,11 @@ setLocale('zh_TW')
 const app = createApp(App)
 
 // 在 $options 上擴展類型，告訴 TypeScript $axios 存在於全局配置中
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $axios: typeof axios
-  }
-}
+// declare module '@vue/runtime-core' {
+//   interface ComponentCustomProperties {
+//     $axios: typeof axios
+//   }
+// }
 // import serviceAxios from '@/utils/axiosInterceptor.js'
 // app.config.globalProperties.$axios = serviceAxios
 

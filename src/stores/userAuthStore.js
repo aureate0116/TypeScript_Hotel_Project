@@ -35,10 +35,16 @@ export const userAuthStore = defineStore('userAuthStore', {
       // return this.getCookie('userAccount')
     },
 
+    // 取得用戶mail, 表示用戶登入時有使用記住帳號
+    getUserEmail() {
+      return this.getCookie('userEmail')
+    },
+
     userLogout() {
       router.replace('/login')
       document.cookie = 'userInfo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
       document.cookie = 'loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+      document.cookie = 'userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
     }
   }
 })
