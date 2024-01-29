@@ -51,7 +51,7 @@
           v-model="registerData.email"
           rules="required"
         />
-        <!-- <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage> -->
+        <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
       </div>
       <div class="col mb-3">
         <label class="form-label" for="password" v-required="true">密碼</label>
@@ -64,9 +64,9 @@
           id="password"
           placeholder="請輸入密碼"
           v-model="registerData.password"
-          rules="required|max:35"
+          rules="required|min:8|password"
         />
-        <!-- <ErrorMessage name="password" class="invalid-feedback"></ErrorMessage> -->
+        <ErrorMessage name="password" class="invalid-feedback"></ErrorMessage>
       </div>
       <div class="col mb-3">
         <label class="form-label" for="confirmPassword" v-required="true">確認密碼</label>
@@ -109,19 +109,19 @@
   <v-form ref="step2Form" v-slot="{ errors }" @submit="saveRegisterData()">
     <div class="row flex-column" v-if="userStep === 2">
       <div class="col mb-3">
-        <label class="form-label" for="userName" v-required="true">姓名</label>
+        <label class="form-label" for="name" v-required="true">姓名</label>
         <v-field
-          name="userName"
+          name="name"
           label="姓名"
           type="text"
           class="form-control"
-          :class="{ 'is-invalid': errors['userName'] }"
-          id="userName"
+          :class="{ 'is-invalid': errors['name'] }"
+          id="name"
           placeholder="輸入姓名"
-          v-model="registerData.userName"
+          v-model="registerData.name"
           rules="required"
         />
-        <!-- <ErrorMessage name="userName" class="invalid-feedback"></ErrorMessage> -->
+        <ErrorMessage name="name" class="invalid-feedback"></ErrorMessage>
       </div>
       <div class="col mb-3">
         <label class="form-label" for="phone" v-required="true">手機號碼</label>
@@ -134,92 +134,136 @@
           id="phone"
           placeholder="請輸入手機號碼"
           v-model="registerData.phone"
-          rules="required"
+          rules="required|phone"
         />
-        <!-- <ErrorMessage name="phone" class="invalid-feedback"></ErrorMessage> -->
+        <ErrorMessage name="phone" class="invalid-feedback"></ErrorMessage>
       </div>
       <div class="col mb-3">
-        <label class="form-label" for="year" label="生日" v-required="true">生日</label>
+        <label class="form-label" for="birthday" label="生日" v-required="true">生日</label>
 
-        <div class="d-flex gap-2">
-          <v-field
-            name="year"
-            as="select"
-            label="年"
-            id="year"
-            class="form-select"
-            :class="{ 'is-invalid': errors['year'] }"
-            rules="required"
-            v-model="birthday.year"
-          >
-            <option value="" selected>請選擇</option>
-            <option
-              v-for="item in 100"
-              :key="item"
-              :value="new Date().getFullYear() - (100 - item)"
+        <div class="row g-2">
+          <div class="col-md-4">
+            <v-field
+              name="year"
+              as="select"
+              label="年"
+              id="birthday"
+              class="form-select"
+              :class="{ 'is-invalid': errors['year'] }"
+              rules="required"
+              v-model="birthday.year"
             >
-              {{ new Date().getFullYear() - (100 - item) }} 年
-            </option>
-          </v-field>
-          <v-field
-            name="month"
-            as="select"
-            label="月"
-            id="month"
-            class="form-select"
-            :class="{ 'is-invalid': errors['month'] }"
-            rules="required"
-            v-model="birthday.month"
-          >
-            <option value="" selected>請選擇</option>
-            <option v-for="item in 12" :key="item" :value="item">{{ item }} 月</option>
-          </v-field>
-          <v-field
-            name="day"
-            as="select"
-            label="日"
-            id="day"
-            class="form-select"
-            :class="{ 'is-invalid': errors['day'] }"
-            rules="required"
-            v-model="birthday.day"
-          >
-            <option value="" selected>請選擇</option>
-            <option v-for="item in dayRange" :key="item" :value="item">{{ item }} 日</option>
-          </v-field>
-          <!-- <ErrorMessage name="year" class="invalid-feedback"></ErrorMessage>
-          <ErrorMessage name="month" class="invalid-feedback"></ErrorMessage>
-          <ErrorMessage name="day" class="invalid-feedback"></ErrorMessage> -->
+              <option value="" selected>請選擇</option>
+              <option
+                v-for="item in 100"
+                :key="item"
+                :value="new Date().getFullYear() - (100 - item)"
+              >
+                {{ new Date().getFullYear() - (100 - item) }} 年
+              </option>
+            </v-field>
+          </div>
+          <div class="col-md-4">
+            <v-field
+              name="month"
+              as="select"
+              label="月"
+              id="birthday"
+              class="form-select"
+              :class="{ 'is-invalid': errors['month'] }"
+              rules="required"
+              v-model="birthday.month"
+            >
+              <option value="" selected>請選擇</option>
+              <option v-for="item in 12" :key="item" :value="item">{{ item }} 月</option>
+            </v-field>
+          </div>
+          <div class="col-md-4">
+            <v-field
+              name="day"
+              as="select"
+              label="日"
+              id="birthday"
+              class="form-select"
+              :class="{ 'is-invalid': errors['day'] }"
+              rules="required"
+              v-model="birthday.day"
+            >
+              <option value="" selected>請選擇</option>
+              <option v-for="item in dayRange" :key="item" :value="item">{{ item }} 日</option>
+            </v-field>
+          </div>
+          <div class="col-md-12 d-flex flex-row">
+            <!-- <ErrorMessage
+              :name="`year` || `month` || `day`"
+              class="invalid-feedback"
+            ></ErrorMessage> -->
+            <ErrorMessage name="year" class="invalid-feedback"></ErrorMessage>
+            <ErrorMessage name="month" class="invalid-feedback"></ErrorMessage>
+            <ErrorMessage name="day" class="invalid-feedback"></ErrorMessage>
+          </div>
         </div>
       </div>
 
       <div class="col mb-3">
-        <label class="form-label" for="address">地址</label>
+        <label class="form-label" for="address" label="生日" v-required="true">生日</label>
 
-        <div class="d-flex">
-          <select id="address" class="form-select mb-3" v-model="addressSelected.city">
-            <option value="" selected>請選擇</option>
-            <option v-for="city in cityArray" :key="city" :value="city">{{ city }}</option>
-          </select>
-          <select id="address" class="form-select mb-3 mx-2" v-model="addressSelected.county">
-            <option value="" selected>請選擇</option>
-            <option v-for="county in countyArray" :key="county" :value="county">{{
-              county.countyName
-            }}</option>
-          </select>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <v-field
+              name="city"
+              as="select"
+              label="縣市"
+              id="address"
+              class="form-select"
+              :class="{ 'is-invalid': errors['city'] }"
+              v-model="addressSelected.city"
+              rules="required"
+            >
+              <option value="" selected>請選擇</option>
+              <option v-for="city in cityArray" :key="city" :value="city">{{ city }}</option>
+            </v-field>
+          </div>
+          <div class="col-md-6">
+            <v-field
+              name="county"
+              as="select"
+              label="鄉鎮區"
+              id="address"
+              class="form-select"
+              :class="{ 'is-invalid': errors['county'] }"
+              v-model="addressSelected.county"
+              rules="required"
+            >
+              <option value="" selected>請選擇</option>
+              <option v-for="county in countyArray" :key="county" :value="county">
+                {{ county.countyName }}
+              </option>
+            </v-field>
+          </div>
+          <div class="col-md-12">
+            <v-field
+              name="detail"
+              type="text"
+              label="詳細地址"
+              class="form-control"
+              :class="{ 'is-invalid': errors['detail'] }"
+              id="address"
+              placeholder="請輸入詳細地址"
+              v-model="addressSelected.detail"
+              rules="required"
+            />
+            <!-- <ErrorMessage
+              :name="`city` || `county` || `detail`"
+              class="invalid-feedback"
+            ></ErrorMessage> -->
+            <ErrorMessage name="city" class="invalid-feedback"></ErrorMessage>
+            <ErrorMessage name="county" class="invalid-feedback"></ErrorMessage>
+            <ErrorMessage name="detail" class="invalid-feedback"></ErrorMessage>
+          </div>
         </div>
-        <input
-          type="text"
-          class="form-control"
-          id="address"
-          placeholder="請輸入詳細地址"
-          v-model="addressSelected.detail"
-          required
-        />
       </div>
       <div class="col mb-3">
-        {{ registerData.isCheckRule }}
-         {{typeof registerData.isCheckRule }}
         <div class="form-check">
           <label class="form-check-label" for="pravicy"> 我已閱讀並同意本網站個資使用規範</label>
           <v-field
@@ -232,6 +276,7 @@
             id="pravicy"
             @click="updateValue"
             v-model="registerData.isCheckRule"
+            value="true"
           />
 
           <ErrorMessage name="isCheckRule" class="invalid-feedback"></ErrorMessage>
@@ -263,11 +308,40 @@
 // TWzipcode.js https://code.essoduke.org/twzipcode/#n-download
 // import Twzipcode from 'twzipcode.js'
 import ZipCodeMap from '@/utils/zipcodes'
+import Swal from 'sweetalert2'
 
+const apiUrl = import.meta.env.VITE_BACKEND_HOST
+
+import { defineRule } from 'vee-validate'
+
+defineRule('phone', (value: string) => {
+  const phoneNumberRegex = /^09\d{8}$/i //
+  return phoneNumberRegex.test(value)
+})
+
+defineRule('password', (value: string) => {
+  const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
+  return phoneNumberRegex.test(value)
+})
 // 處理年月日
 // const year = new Date().getFullYear()
 // const month = 1 as number
 // const monthDays = 31 as number
+
+interface postSignUpData {
+  name: string
+  email: string
+  password: string
+  // confirmPassword: string;
+  // name: string;
+  phone: string
+  birthday: string
+  // isCheckRule: boolean;
+  address: {
+    zipcode: number
+    detail: string
+  }
+}
 
 export default {
   data() {
@@ -277,11 +351,11 @@ export default {
         email: '' as string,
         password: '' as string,
         confirmPassword: '' as string,
-        userName: '' as string,
+        name: '' as string,
         phone: '' as string,
         birthday: '' as string,
         // address: '' as string
-        isCheckRule: false as boolean,
+        isCheckRule: false as boolean
       },
 
       //
@@ -323,22 +397,21 @@ export default {
       return this.addressSelected.city
         ? this.organizedData[this.addressSelected.city]?.countyList || []
         : []
-    },
+    }
     //  checkedIsCheckRule() {
     //   // Convert the value to a boolean
     //   return Boolean(this.registerData.isCheckRule);
     // },
   },
   watch: {
-
-  //   'registerData.isCheckRule': {
-  //   handler(newVal) {
-  //     console.log('newVal---', newVal);
-  //     // Update the value directly
-  //     this.registerData.isCheckRule = Boolean(newVal);
-  //   },
-  //   immediate: true,
-  // },
+    //   'registerData.isCheckRule': {
+    //   handler(newVal) {
+    //     console.log('newVal---', newVal);
+    //     // Update the value directly
+    //     this.registerData.isCheckRule = Boolean(newVal);
+    //   },
+    //   immediate: true,
+    // },
     //依據county 取得zipcode
     'addressSelected.county': {
       handler(newValue) {
@@ -374,12 +447,69 @@ export default {
     'birthday.day': { handler: 'handleBirthdayChange', immediate: true }
   },
   methods: {
+    // 切換表單步驟 & 驗證信箱是否已註冊過
     changeStep(num: number): void {
       if (this.$refs.step1Form) {
         ;(this.$refs.step1Form as any).validate().then((result: { valid: boolean }) => {
           if (result.valid) {
-            this.userStep = num
-            console.log('this.userStep', this.userStep)
+            // this.userStep = num
+            // console.log('this.userStep', this.userStep)
+            // 先驗證 email 是否註冊過
+            let headers = {
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
+            }
+
+            let data = {
+              email: this.registerData.email
+            }
+
+            this.axios
+              .post(`${apiUrl}verify/email`, data, { headers })
+              .then((res) => {
+                if (res.data.status) {
+                  // 已存在
+                  if (res.data.result.isEmailExists) {
+                    Swal.fire({
+                      icon: 'error',
+                      iconColor: '#dc3545',
+                      title: '此信箱已註冊過',
+                      showConfirmButton: false,
+                      width: '400px',
+                      customClass: {
+                        title: 'fs-4'
+                      }
+                    })
+                  } else {
+                    // 切換表單步驟
+                    this.userStep = num
+                  }
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#dc3545',
+                    title: res.data.message,
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+                }
+              })
+              .catch((err) => {
+                console.log('err', err)
+                Swal.fire({
+                  icon: 'error',
+                  iconColor: '#C22538',
+                  title: err.response.data.message,
+                  showConfirmButton: false,
+                  width: '400px',
+                  customClass: {
+                    title: 'fs-4'
+                  }
+                })
+              })
           }
         })
       }
@@ -388,20 +518,75 @@ export default {
     // 儲存資料
     saveRegisterData(): void {
       if (this.$refs.step2Form) {
-        ;(this.$refs.step2Form as any).validate().then((result) => {
+        let headers = {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+
+        let data: postSignUpData = {
+          name: this.registerData.name,
+          email: this.registerData.email,
+          password: this.registerData.password,
+          phone: this.registerData.phone,
+          birthday: this.registerData.birthday,
+          address: {
+            zipcode: Number(this.addressSelected.zipcode),
+            detail: this.addressSelected.detail
+          }
+        }
+
+        console.log('---data', data)
+        ;(this.$refs.step2Form as any).validate().then((result: any) => {
           if (result.valid) {
             this.axios
-              .post(`${apiUrl}user/login`, data, { Headers })
+              .post(`${apiUrl}user/signup`, data, { headers })
               .then((res) => {
-                console.log('res', res)
-                console.log('res', JSON.stringify(res.data))
-                document.cookie = `loginToken=${res.data.token};  path=/ ;`
-                document.cookie = `userInfo=${res.data.result};  path=/ ;`
+                if (res.data.status) {
+                  console.log('res', res)
+                  console.log('res', JSON.stringify(res.data))
+                  document.cookie = `loginToken=${res.data.token};  path=/ ;`
+                  document.cookie = `userInfo=${res.data.result};  path=/ ;`
 
-                this.$router.push({ name: 'home' })
+                  Swal.fire({
+                    icon: 'success',
+                    iconColor: '#299F65',
+                    title: '註冊成功!',
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+                  this.$router.push({ name: 'home' })
+                } else {
+                  // alert(res.response.data.message)
+
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#dc3545',
+                    title: res.data.message,
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+
+                  this.userStep = 1
+                }
               })
               .catch((err) => {
                 console.log('err', err)
+                Swal.fire({
+                  icon: 'error',
+                  iconColor: '#C22538',
+                  title: err.response.data.message,
+                  showConfirmButton: false,
+                  width: '400px',
+                  customClass: {
+                    title: 'fs-4'
+                  }
+                })
               })
           }
         })
@@ -453,10 +638,14 @@ export default {
       console.log(' this.cityArray', this.cityArray)
     },
 
-    // 
-    updateValue(){
-      console.log('this.registerData.isCheckRule',this.registerData.isCheckRule , typeof(this.registerData.isCheckRule))
-      this.registerData.isCheckRule = !this.registerData.isCheckRule
+    //
+    updateValue() {
+      this.registerData.isCheckRule = !this.registerData.isCheckRule.toString()
+      console.log(
+        'this.registerData.isCheckRule',
+        this.registerData.isCheckRule,
+        typeof this.registerData.isCheckRule
+      )
     }
   },
   mounted() {
