@@ -1,15 +1,29 @@
 <template>
-  <div class="container-fluid p-0 overflow-hidden">
+  <!-- -->
+  <div class="container-fluid p-0">
+    <div class="user_center_banner">
+      <div class="container d-flex align-items-center">
+        <img
+          src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/user1.png?raw=true"
+          alt="Logo"
+          height="144"
+        />
+
+        <h1 class="text-white ms-5">Hello，{{ userInfo.name }}</h1>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="container-fluid p-0 overflow-hidden">
     <nav
-      class="navbar site_layout_navbar navbar-expand-lg   fixed-top"
+      class="navbar site_layout_navbar navbar-expand-lg py-3 px-7 fixed-top"
       :class="{ 'bg-black': $route.path !== '/' }"
     >
       <div class="container-fluid">
-        <router-link class="navbar-brand p-0" to="/"
+        <router-link class="navbar-brand mx-0" to="/"
           ><img
             src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/logo.png?raw=true"
             alt="Logo"
-            height="72"
+            height="100"
         /></router-link>
         <button
           class="navbar-toggler"
@@ -24,9 +38,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav w-100 mb-2 mb-lg-0 d-flex justify-content-end">
-            <!-- <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li> -->
+            
             <li class="nav-item px-3">
               <a class="nav-link text-white" href="#">客房旅宿</a>
             </li>
@@ -82,25 +94,35 @@
         <div class="col-auto">© 享樂酒店 2023 All Rights Reserved.</div>
       </div>
     </footer>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 // import { defineComponent } from '@vue/composition-api'
-
+import { mapActions, mapState } from 'pinia'
+import { userAuthStore } from '@/stores/userAuthStore.js'
 export default {
   data() {
     return {
-      isScrolled: false
+      // isScrolled: false
+      userName: '' as string,
+      userInfo: {
+        name: '' as string
+      }
     }
   },
   methods: {
-    handleScroll() {
-      this.isScrolled = window.scrollY > 0
-    }
+    ...mapActions(userAuthStore, ['getUserAccount'])
+    // handleScroll() {
+    //   this.isScrolled = window.scrollY > 0
+    // }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+    this.userInfo = this.getUserAccount()
+    // this.userName =
+    console.log('userinfo', this.userInfo)
+    console.log('document.cookie', document.cookie)
+    // window.addEventListener('scroll', this.handleScroll)
   }
 }
 // export default defineComponent({
@@ -109,3 +131,7 @@ export default {
 //     },
 // })
 </script>
+
+<style scoped="scss">
+@import '@/assets/css/layout/userLayout.scss';
+</style>

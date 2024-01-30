@@ -1,22 +1,44 @@
 .section_banner {
   padding: 236px 80px 166px 80px;
 
+  position: relative;
+  min-height: 1080px;
+  // padding-top: 200px;
+  background-image: url('@/assets/images/banner.png');
+  background-size: cover;
+  z-index: -1;
+  overflow: hidden;
+
+  .content {
+    z-index: 9999;
+  }
+
   .border_bottom {
     border-bottom: 2px solid;
     border-image: linear-gradient(to right, #bf9d7d, #fff) 1;
     border-image-slice: 10; //漸層切片大小
   }
 
-
-  .section_banner_button{
+  .section_banner_button {
     min-width: 776px;
     height: 116px;
     align-items: right;
-
   }
 
-  .border_center{
+  .border_center {
     border-bottom: 2px solid;
     width: 150px;
   }
+}
+
+.section_banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.8;
+  z-index: -1;
 }

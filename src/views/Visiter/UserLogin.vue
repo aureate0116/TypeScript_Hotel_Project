@@ -71,8 +71,10 @@
 
 <script lang="ts">
 const apiUrl = import.meta.env.VITE_BACKEND_HOST
+import Swal from 'sweetalert2'
+
 import { mapActions, mapState } from 'pinia'
-import { userAuthStore } from '@/stores/userAuthStore'
+import { userAuthStore } from '@/stores/userAuthStore.js'
 // import { useAlertStore } from '@/stores/alertStore'
 
 export default {
@@ -80,7 +82,7 @@ export default {
     return {
       userAccount: {
         email: '' as string,
-        password: '' as string
+        password: '' as string //test1234
       },
       loginSetting: {
         isRememberAccount: false
@@ -99,24 +101,51 @@ export default {
       console.log('this.userAccount', this.userAccount)
       console.log('data', data)
       //   console.log('apiUrl', apiUrl)
+      if (this.$refs.myForm) {
+        ;(this.$refs.myForm as any).validate().then((result: { valid: boolean }) => {
+          if (result.valid) {
+            this.axios
+              .post(`${apiUrl}user/login`, data, { headers })
+              .then((res) => {
+                console.log('res', res)
+                console.log('res', JSON.stringify(res.data))
 
-      this.$refs.myForm.validate().then((result) => {
-        if (result.valid) {
-          this.axios
-            .post(`${apiUrl}user/login`, data, { headers })
-            .then((res) => {
-              console.log('res', res)
-              console.log('res', JSON.stringify(res.data))
-              document.cookie = `loginToken=${res.data.token};  path=/ ;`
-              document.cookie = `userInfo=${res.data.result};  path=/ ;`
+                if (res.data.status) {
+                  console.log('res', res)
+                  console.log('res', JSON.stringify(res.data))
+                  document.cookie = `loginToken=${res.data.token};  path=/ ;`
+                  document.cookie = `userInfo=${JSON.stringify(res.data.result)};  path=/ ;`
 
-              this.$router.push({ name: 'home' })
-            })
-            .catch((err) => {
-              console.log('err', err)
-            })
-        }
-      })
+                  this.$router.push({ name: 'home' })
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#dc3545',
+                    title: res.data.message,
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+                }
+              })
+              .catch((err) => {
+                console.log('err', err)
+                Swal.fire({
+                  icon: 'error',
+                  iconColor: '#C22538',
+                  title: err.response.data.message,
+                  showConfirmButton: false,
+                  width: '400px',
+                  customClass: {
+                    title: 'fs-4'
+                  }
+                })
+              })
+          }
+        })
+      }
 
       // 是否記住帳號判斷
       if (this.loginSetting.isRememberAccount == true) {

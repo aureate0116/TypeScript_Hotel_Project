@@ -13,12 +13,12 @@ const router = createRouter({
         {
           path: '',
           name: 'login',
-          component: () => import('@/views/UserLogin.vue')
+          component: () => import('@/views/Visiter/UserLogin.vue')
         },
         {
           path: '/register',
           name: 'register',
-          component: () => import('@/views/UserRegister.vue')
+          component: () => import('@/views/Visiter/UserRegister.vue')
         }
       ]
     },
@@ -38,9 +38,47 @@ const router = createRouter({
           path: '',
           name: 'home',
           component: () => import('@/views/HomeIndex.vue')
+        },
+
+        {
+          path: '/userCenter',
+          name: '',
+          component: () => import('@/views/Layout/UserLayout.vue')
+          // meta: { breadcrumb: '' },
+          // children: [
+          //   {
+          //     path: '',
+          //     name: 'userCenter',
+          //     component: () => import('@/views/Visiter/UserLogin.vue')
+          //   },
+          //   {
+          //     path: '/register',
+          //     name: 'register',
+          //     component: () => import('@/views/Visiter/UserRegister.vue')
+          //   }
+          // ]
         }
       ]
     }
+
+    // {
+    //   path: '/userCenter',
+    //   name: '',
+    //   component: () => import('@/views/Layout/userLayout.vue'),
+    //   // meta: { breadcrumb: '' },
+    //   children: [
+    //     {
+    //       path: '',
+    //       name: 'userCenter',
+    //       component: () => import('@/views/Visiter/UserLogin.vue')
+    //     },
+    //     {
+    //       path: '/register',
+    //       name: 'register',
+    //       component: () => import('@/views/Visiter/UserRegister.vue')
+    //     }
+    //   ]
+    // }
 
     // {
     //   path: '/',

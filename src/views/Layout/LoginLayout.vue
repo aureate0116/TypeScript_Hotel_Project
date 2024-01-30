@@ -43,12 +43,8 @@ export default {
   methods: {},
   mounted() {}
 }
-// export default defineComponent({
-//     setup() {
-
-//     },
-// })
+ 
 </script>
 <style scoped="scss">
-@import '@/assets/css/layout/LoginLayout.scss';
+@import '@/assets/css/layout/loginLayout.scss';
 </style>

@@ -3,31 +3,31 @@
   padding: 24px 80px 24px 80px;
 }
 
-.site_mainContent {
-  position: relative;
-  min-height: 1080px;
-  // padding-top: 200px;
-  background-image: url('@/assets/images/banner.png');
-  background-size: cover;
-  z-index: -1;
-  overflow: hidden;
+// .site_mainContent {
+//   // position: relative;
+//   min-height: 1080px;
+//   // padding-top: 200px;
+//   // background-image: url('@/assets/images/banner.png');
+//   // background-size: cover;
+//   // z-index: -1;
+//   // overflow: hidden;
 
-  .content {
-    z-index: 9999;
-  }
-}
+//   // .content {
+//   //   z-index: 9999;
+//   // }
+// }
 
-.site_mainContent::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  opacity: 0.8;
-  z-index: -1;
-}
+// .site_mainContent::before {
+//   content: '';
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: #000;
+//   opacity: 0.8;
+//   z-index: -1;
+// }
 
 .site_footer {
   padding: 80px 312px 120px 312px;

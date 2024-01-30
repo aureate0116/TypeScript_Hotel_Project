@@ -36,7 +36,7 @@
   </div>
 
   <!-- Step 1 -->
-  <v-form ref="step1Form" v-slot="{ errors }" @submit="changeStep()">
+  <v-form ref="step1Form" v-slot="{ errors }" @submit="changeStep">
     <div class="row flex-column" v-if="userStep === 1">
       <div class="col mb-3">
         <label class="form-label" for="email" v-required="true">電子信箱</label>
@@ -206,7 +206,7 @@
       </div>
 
       <div class="col mb-3">
-        <label class="form-label" for="address" label="生日" v-required="true">生日</label>
+        <label class="form-label" for="address" label="地址" v-required="true">地址</label>
 
         <div class="row g-2">
           <div class="col-md-6">
@@ -236,7 +236,7 @@
               rules="required"
             >
               <option value="" selected>請選擇</option>
-              <option v-for="county in countyArray" :key="county" :value="county">
+              <option v-for="county in countyArray" :key="county.countyName" :value="county">
                 {{ county.countyName }}
               </option>
             </v-field>
@@ -372,15 +372,6 @@ export default {
         detail: '' as string
       },
 
-      // 地址
-      // addressSelectOptions: {
-      //   zipcode: {} as Record<string, number[]>,
-      //   detail: '' as string,
-      //   county: {} as Record<string, string[]>,
-
-      //   city: [] as Array<string>
-      // },
-
       // 日期區間
       dayRange: 0 as number,
 
@@ -398,20 +389,8 @@ export default {
         ? this.organizedData[this.addressSelected.city]?.countyList || []
         : []
     }
-    //  checkedIsCheckRule() {
-    //   // Convert the value to a boolean
-    //   return Boolean(this.registerData.isCheckRule);
-    // },
   },
   watch: {
-    //   'registerData.isCheckRule': {
-    //   handler(newVal) {
-    //     console.log('newVal---', newVal);
-    //     // Update the value directly
-    //     this.registerData.isCheckRule = Boolean(newVal);
-    //   },
-    //   immediate: true,
-    // },
     //依據county 取得zipcode
     'addressSelected.county': {
       handler(newValue) {
@@ -432,16 +411,6 @@ export default {
       immediate: true
     },
 
-    // 'registerData.isCheckRule':{
-    //   handler(newVal){
-    //     console.log('newVal---',newVal)
-    //     if(newVal=='on' || newVal == true){
-    //       this.registerData.isCheckRule = Boolean(newVal)
-    //     }else{
-    //       this.registerData.isCheckRule = ''
-    //     }
-    //   }, immediate: true
-    // },
     'birthday.year': { handler: 'handleBirthdayChange', immediate: true },
     'birthday.month': { handler: 'handleBirthdayChange', immediate: true },
     'birthday.day': { handler: 'handleBirthdayChange', immediate: true }
@@ -544,8 +513,8 @@ export default {
                 if (res.data.status) {
                   console.log('res', res)
                   console.log('res', JSON.stringify(res.data))
-                  document.cookie = `loginToken=${res.data.token};  path=/ ;`
-                  document.cookie = `userInfo=${res.data.result};  path=/ ;`
+                  // document.cookie = `loginToken=${res.data.token};  path=/ ;`
+                  // document.cookie = `userInfo=${res.data.result};  path=/ ;`
 
                   Swal.fire({
                     icon: 'success',
@@ -557,10 +526,8 @@ export default {
                       title: 'fs-4'
                     }
                   })
-                  this.$router.push({ name: 'home' })
+                  this.$router.push({ name: 'login' })
                 } else {
-                  // alert(res.response.data.message)
-
                   Swal.fire({
                     icon: 'error',
                     iconColor: '#dc3545',
@@ -654,5 +621,5 @@ export default {
 }
 </script>
 <style scoped="scss">
-@import '@/assets/css/layout/LoginLayout.scss';
+@import '@/assets/css/layout/loginLayout.scss';
 </style>
