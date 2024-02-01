@@ -62,60 +62,298 @@
                 <h5 class="fw-bold mb-7">修改密碼</h5>
                 <div class="mb-3">
                   <h6>電子信箱</h6>
-                  <p>{{ userInfo.email }}</p>
+                  <p class="fw-bold">{{ userInfo.email }}</p>
                 </div>
-                <div class="row w-100  align-items-center">
+                <div class="row w-100 align-items-center mb-3" v-if="!showResetPwd">
                   <div class="col">
-                    <h6 class="fw-bold">電子信箱</h6>
-                    <input type="password" value="testnumber" class="border-0" />
+                    <h6>密碼</h6>
+                    <input type="password" value="testnumber" class="border-0 fw-bold" />
                   </div>
                   <div class="col text-end">
-                    <a href="" class="" @click="resetPwd">重設</a>
+                    <button
+                      class="btn border-0 text-primary text-decoration-underline"
+                      @click="resetPwd"
+                    >
+                      重設
+                    </button>
                   </div>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">舊密碼</h6>
-                  <input type="password" class="form-control" />
+                  <input type="password" class="form-control" placeholder="請輸入舊密碼" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">新密碼</h6>
-                  <input type="password" class="form-control" />
+                  <input type="password" class="form-control" placeholder="請輸入新密碼" />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">確認新密碼</h6>
-                  <input type="password" class="form-control" />
+                  <input type="password" class="form-control" placeholder="請再輸入一次新密碼" />
                 </div>
+                <button
+                  v-if="showResetPwd"
+                  class="btn btn-light py-3 px-6 text-gray"
+                  @click="saveAccount"
+                >
+                  儲存設定
+                </button>
               </div>
             </v-form>
 
-            <v-form ref="dataForm" v-slot="{ errors }" @submit="saveUserData"></v-form>
             <div class="content_right bg-white p-7 rounded-4 ms-7">
-              <h5 class="fw-bold mb-7">基本資料</h5>
-              <!-- <div class="mb-3">
-                  <h6>電子信箱</h6>
-                  <p>{{ userInfo.email }}</p>
-                </div>
-                <div>
-                  <h6 class="fw-bold">電子信箱</h6>
-                  <input type="password" value="testnumber" class="border-0" />
-                </div>
-                <div class=" ">
-                  <a href="" class="" @click="resetPwd">重設</a>
-                </div>
+              <v-form ref="dataForm" v-slot="{ errors }" @submit="saveUserData">
+                <h5 class="fw-bold mb-7">基本資料</h5>
 
-                <div class="mb-3">
-                  <h6 class="fw-bold">舊密碼</h6>
-                  <input type="password" class="form-control" />
+                <div class="row flex-column">
+                  <div class="col mb-3">
+                    <label v-if="!isEditData" class="form-label" for="name">姓名</label>
+                    <label v-else class="form-label" for="name" v-required="true">姓名</label>
+                    <v-field
+                      name="name"
+                      label="姓名"
+                      type="text"
+                      class="form-control fw-bold"
+                      :class="{
+                        'is-invalid': errors['name'] && isEditData,
+                        'border-0 p-0 bg-white  ': !isEditData
+                      }"
+                      id="name"
+                      placeholder="輸入姓名"
+                      v-model="userInfo.name"
+                      rules="required"
+                      :disabled="!isEditData"
+                    />
+                    <ErrorMessage
+                      v-if="isEditData"
+                      name="name"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
+                  <div class="col mb-3">
+                    <label v-if="!isEditData" class="form-label" for="phone">手機號碼</label>
+                    <label v-else class="form-label" for="phone" v-required="true">手機號碼</label>
+                    <v-field
+                      name="phone"
+                      label="手機號碼"
+                      type="text"
+                      class="form-control fw-bold"
+                      :class="{
+                        'is-invalid': errors['phone'] && isEditData,
+                        'border-0 p-0 bg-white': !isEditData
+                      }"
+                      id="phone"
+                      placeholder="請輸入手機號碼"
+                      v-model="userInfo.phone"
+                      rules="required|phone"
+                      :disabled="!isEditData"
+                    />
+                    <ErrorMessage
+                      v-if="isEditData"
+                      name="phone"
+                      class="invalid-feedback"
+                    ></ErrorMessage>
+                  </div>
+                  <div class="col mb-3">
+                    <label v-if="!isEditData" class="form-label" for="birthday" label="生日"
+                      >生日</label
+                    >
+
+                    <label v-else class="form-label" for="birthday" label="生日" v-required="true"
+                      >生日</label
+                    >
+                    <div class="row g-2">
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          v-if="!isEditData"
+                          class="form-control border-0 p-0 bg-white"
+                          v-model="birthday.year"
+                          disabled
+                        />
+                        <v-field
+                          v-else
+                          name="year"
+                          as="select"
+                          label="年"
+                          id="birthday"
+                          class="form-select"
+                          :class="{
+                            'is-invalid': errors['year']
+                          }"
+                          rules="required"
+                          v-model="birthday.year"
+                        >
+                          <option value="" selected>請選擇</option>
+                          <option
+                            v-for="item in 100"
+                            :key="item"
+                            :value="new Date().getFullYear() - (100 - item)"
+                          >
+                            {{ new Date().getFullYear() - (100 - item) }} 年
+                          </option>
+                        </v-field>
+                      </div>
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          v-if="!isEditData"
+                          class="form-control border-0 p-0 bg-white"
+                          v-model="birthday.month"
+                          disabled
+                        />
+                        <v-field
+                          v-else
+                          name="month"
+                          as="select"
+                          label="月"
+                          id="birthday"
+                          class="form-select"
+                          :class="{
+                            'is-invalid': errors['month']
+                          }"
+                          rules="required"
+                          v-model="birthday.month"
+                        >
+                          <option value="" selected>請選擇</option>
+                          <option v-for="item in 12" :key="item" :value="item">
+                            {{ item }} 月
+                          </option>
+                        </v-field>
+                      </div>
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          v-if="!isEditData"
+                          class="form-control border-0 p-0 bg-white"
+                          v-model="birthday.day"
+                          disabled
+                        />
+                        <v-field
+                          v-else
+                          name="day"
+                          as="select"
+                          label="日"
+                          id="birthday"
+                          class="form-select"
+                          :class="{
+                            'is-invalid': errors['day']
+                          }"
+                          rules="required"
+                          v-model="birthday.day"
+                        >
+                          <option value="" selected>請選擇</option>
+                          <option v-for="item in dayRange" :key="item" :value="item">
+                            {{ item }} 日
+                          </option>
+                        </v-field>
+                      </div>
+                      <div v-if="isEditData" class="col-md-12 d-flex flex-row">
+                        <ErrorMessage name="year" class="invalid-feedback"></ErrorMessage>
+                        <ErrorMessage name="month" class="invalid-feedback"></ErrorMessage>
+                        <ErrorMessage name="day" class="invalid-feedback"></ErrorMessage>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col mb-3">
+                    <label v-if="!isEditData" class="form-label" for="address" label="地址"
+                      >地址</label
+                    ><label v-else class="form-label" for="address" label="地址" v-required="true"
+                      >地址</label
+                    >
+
+                    <div class="row g-2">
+                      <div class="col-md-6" :class="{ 'col-md-12': !isEditData }">
+                        <input
+                          type="text"
+                          v-if="!isEditData"
+                          class="form-control border-0 p-0 bg-white fw-bold"
+                          :value="`${addressSelected.city}${addressSelected.county}${addressSelected.detail}`"
+                          disabled
+                        />
+                        <v-field
+                          v-else
+                          name="city"
+                          as="select"
+                          label="縣市"
+                          id="address"
+                          class="form-select"
+                          :class="{
+                            'is-invalid': errors['city']
+                          }"
+                          v-model="addressSelected.city"
+                          rules="required"
+                        >
+                          <option value="" selected>請選擇</option>
+                          <option v-for="city in cityArray" :key="city" :value="city">
+                            {{ city }}
+                          </option>
+                        </v-field>
+                      </div>
+                      <div class="col-md-6" v-if="isEditData">
+                        <v-field
+                          name="county"
+                          as="select"
+                          label="鄉鎮區"
+                          id="address"
+                          class="form-select"
+                          :class="{
+                            'is-invalid': errors['county']
+                          }"
+                          v-model="addressSelected.county"
+                          rules="required"
+                        >
+                          <option value="" selected>請選擇</option>
+                          <option
+                            v-for="county in countyArray"
+                            :key="county.countyName"
+                            :value="county.countyName"
+                          >
+                            {{ county.countyName }}
+                          </option>
+                        </v-field>
+                      </div>
+                      <div class="col-md-12" v-if="isEditData">
+                        <v-field
+                          name="detail"
+                          type="text"
+                          label="詳細地址"
+                          class="form-control"
+                          :class="{
+                            'is-invalid': errors['detail'],
+                            'border-0 p-0 bg-white': !isEditData
+                          }"
+                          id="address"
+                          placeholder="請輸入詳細地址"
+                          v-model="addressSelected.detail"
+                          rules="required"
+                          :disabled="!isEditData"
+                        />
+
+                        <template v-if="isEditData">
+                          <ErrorMessage name="city" class="invalid-feedback"></ErrorMessage>
+                          <ErrorMessage name="county" class="invalid-feedback"></ErrorMessage>
+                          <ErrorMessage name="detail" class="invalid-feedback"></ErrorMessage>
+                        </template>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <button
+                      v-if="!isEditData"
+                      class="btn btn-outline-primary py-3 px-6 text-primary"
+                      @click="changeStateToEdit"
+                    >
+                      編輯
+                    </button>
+                    <button v-else class="btn btn-light py-3 px-6 text-gray" @click="saveUserData">
+                      儲存設定
+                    </button>
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <h6 class="fw-bold">新密碼</h6>
-                  <input type="password" class="form-control" />
-                </div>
-                <div class="mb-3">
-                  <h6 class="fw-bold">確認新密碼</h6>
-                  <input type="password" class="form-control" />
-                </div> -->
+              </v-form>
             </div>
           </div>
         </div>
@@ -133,9 +371,26 @@
 </template>
 
 <script lang="ts">
-// import { defineComponent } from '@vue/composition-api'
 import { mapActions, mapState } from 'pinia'
 import { userAuthStore } from '@/stores/userAuthStore.js'
+
+import ZipCodeMap from '@/utils/zipcodes'
+import Swal from 'sweetalert2'
+
+const apiUrl = import.meta.env.VITE_BACKEND_HOST
+
+import { defineRule } from 'vee-validate'
+
+defineRule('phone', (value: string) => {
+  const phoneNumberRegex = /^09\d{8}$/i //
+  return phoneNumberRegex.test(value)
+})
+
+defineRule('password', (value: string) => {
+  const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
+  return phoneNumberRegex.test(value)
+})
+
 export default {
   data() {
     return {
@@ -143,27 +398,158 @@ export default {
       userName: '' as string,
       userInfo: {
         name: '' as string,
-        email: '' as string
+        email: '' as string,
+        phone: '' as string,
+        birthday: '' as string,
+        address: {
+          city: '' as string,
+          detail: '' as string,
+          zipcode: '' as string,
+          county: '' as string
+        }
       },
-      showResetPwd: false
+
+      organizedData: {} as {
+        [key: string]: { CityName: string; countyList: { ZipCode: string; countyName: string }[] }
+      },
+      cityArray: [] as string[],
+
+      // 綁定的地址
+      addressSelected: {
+        city: '' as string,
+        county: '' as string,
+        zipcode: '' as string,
+        detail: '' as string
+      },
+
+      // 日期區間
+      dayRange: 0 as number,
+
+      birthday: {
+        year: '',
+        month: '',
+        day: ''
+      },
+      showResetPwd: false,
+      isEditData: false
     }
+  },
+  computed: {
+    countyArray() {
+      return this.addressSelected.city
+        ? this.organizedData[this.addressSelected.city]?.countyList || []
+        : []
+    }
+  },
+  watch: {
+    //依據county 取得zipcode
+    'addressSelected.county': {
+      handler(newValue) {
+        console.log('countyArray', this.countyArray)
+        console.log('newValue', newValue)
+
+        let array = this.countyArray.filter((item) => {
+          console.log('item', item)
+          return item.countyName == newValue.countyName
+        })
+
+        console.log('array', array)
+        if (array.length > 0) {
+          this.addressSelected.zipcode = array[0].ZipCode
+          console.log('this.addressSelected.zipcode', this.addressSelected.zipcode)
+        }
+      },
+      immediate: true
+    },
+
+    'birthday.year': { handler: 'handleBirthdayChange', immediate: true },
+    'birthday.month': { handler: 'handleBirthdayChange', immediate: true },
+    'birthday.day': { handler: 'handleBirthdayChange', immediate: true }
   },
   methods: {
     ...mapActions(userAuthStore, ['getUserAccount']),
 
-    // handleScroll() {
-    //   this.isScrolled = window.scrollY > 0
-    // }
-
     resetPwd(): void {
       this.showResetPwd = true
+    },
+    saveAccount(): void {
+      this.showResetPwd = false
+    },
+
+    changeStateToEdit(): void {
+      this.isEditData = true
+    },
+    saveUserData(): void {
+      this.isEditData = false
+    },
+
+    // 判斷平年閏年
+    isLeapYear(year: number): boolean {
+      return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0
+    },
+    // 判斷日期範圍
+    updateDayRange(year: any, month: any): void {
+      const monthsWith31Days = [1, 3, 5, 7, 8, 10, 12]
+      this.dayRange =
+        month === 2 ? (this.isLeapYear(year) ? 29 : 28) : monthsWith31Days.includes(month) ? 31 : 30
+    },
+    //處理生日日期格式
+    handleBirthdayChange(newVal: any): void {
+      this.updateDayRange(this.birthday.year, newVal)
+      const dateObject = new Date(
+        Number(this.birthday.year),
+        Number(this.birthday.month) - 1,
+        Number(this.birthday.day)
+      )
+      this.userInfo.birthday = dateObject.toISOString()
+      console.log('this.registerData.birthday', this.userInfo.birthday)
+    },
+
+    // 處理地址
+    handleAddressSelect(): void {
+      ZipCodeMap.forEach((item: any) => {
+        const { city, county, zipcode } = item
+
+        if (!this.organizedData[city]) {
+          this.organizedData[city] = {
+            CityName: city,
+            countyList: []
+          }
+        }
+
+        this.organizedData[city].countyList.push({
+          ZipCode: String(zipcode),
+          countyName: county
+        })
+      })
+      this.cityArray = Object.keys(this.organizedData)
+
+      console.log('123', Object.values(this.organizedData)[0])
+      console.log(' this.cityArray', this.cityArray)
     }
+
+    //
+    // updateValue() {
+    //   // this.userInfo.isCheckRule = !this.registerData.isCheckRule.toString()
+    //   console.log(
+    //     'this.registerData.isCheckRule',
+    //     this.userInfo.isCheckRule,
+    //     typeof this.userInfo.isCheckRule
+    //   )
+    // }
   },
   mounted() {
     this.userInfo = this.getUserAccount()
+
+    this.addressSelected.detail = this.userInfo.address.detail
+    this.addressSelected.county = this.userInfo.address.county
+    this.addressSelected.city = this.userInfo.address.city
+    this.addressSelected.zipcode = this.userInfo.address.zipcode
     // this.userName =
     console.log('userinfo', this.userInfo)
     console.log('document.cookie', document.cookie)
+    console.log(' this.addressSelected', this.addressSelected)
+    this.handleAddressSelect()
     // window.addEventListener('scroll', this.handleScroll)
   }
 }
