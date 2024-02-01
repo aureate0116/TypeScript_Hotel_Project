@@ -1,6 +1,6 @@
 <template>
   <!-- -->
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-0 bg-black">
     <div class="user_center_banner">
       <div class="container d-flex align-items-center">
         <img
@@ -12,89 +12,124 @@
         <h1 class="text-white ms-5">Hello，{{ userInfo.name }}</h1>
       </div>
     </div>
-  </div>
-  <!-- <div class="container-fluid p-0 overflow-hidden">
-    <nav
-      class="navbar site_layout_navbar navbar-expand-lg py-3 px-7 fixed-top"
-      :class="{ 'bg-black': $route.path !== '/' }"
-    >
-      <div class="container-fluid">
-        <router-link class="navbar-brand mx-0" to="/"
-          ><img
-            src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/logo.png?raw=true"
-            alt="Logo"
-            height="100"
-        /></router-link>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+
+    <!-- 會員中心選單 tab  -->
+
+    <div class="container">
+      <ul class="nav user_center_menu py-8" id="userInfo" role="tablist">
+        <li class="nav-item" role="presentation">
+          <!-- userData -->
+          <button
+            class="nav-link active"
+            id="userData-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#userData"
+            type="button"
+            role="tab"
+            aria-controls="userData"
+            aria-selected="true"
+          >
+            個人資料
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <!-- userOrder -->
+          <button
+            class="nav-link"
+            id="userOrder-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#userOrder"
+            type="button"
+            role="tab"
+            aria-controls="userOrder"
+            aria-selected="false"
+          >
+            我的訂單
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content w-100" id="userInfoContent">
+        <div
+          class="tab-pane fade show active"
+          id="userData"
+          role="tabpanel"
+          aria-labelledby="userData-tab"
         >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav w-100 mb-2 mb-lg-0 d-flex justify-content-end">
-            
-            <li class="nav-item px-3">
-              <a class="nav-link text-white" href="#">客房旅宿</a>
-            </li>
-            <li class="nav-item px-3">
-              <router-link :to="{ name: 'login' }" class="nav-link text-white" href="#"
-                >會員登入</router-link
-              >
-            </li>
+          <div class="d-flex justify-content-between">
+            <v-form ref="resetForm" v-slot="{ errors }" @submit="saveAccount">
+              <div class="content_left bg-white p-7 rounded-4">
+                <h5 class="fw-bold mb-7">修改密碼</h5>
+                <div class="mb-3">
+                  <h6>電子信箱</h6>
+                  <p>{{ userInfo.email }}</p>
+                </div>
+                <div class="row w-100  align-items-center">
+                  <div class="col">
+                    <h6 class="fw-bold">電子信箱</h6>
+                    <input type="password" value="testnumber" class="border-0" />
+                  </div>
+                  <div class="col text-end">
+                    <a href="" class="" @click="resetPwd">重設</a>
+                  </div>
+                </div>
 
-            <li class="nav-item px-3">
-              <button type="button" class="btn btn-primary text-white px-3 py-2">立即訂房</button>
-            </li>
-          </ul>
+                <div class="mb-3">
+                  <h6 class="fw-bold">舊密碼</h6>
+                  <input type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">新密碼</h6>
+                  <input type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">確認新密碼</h6>
+                  <input type="password" class="form-control" />
+                </div>
+              </div>
+            </v-form>
+
+            <v-form ref="dataForm" v-slot="{ errors }" @submit="saveUserData"></v-form>
+            <div class="content_right bg-white p-7 rounded-4 ms-7">
+              <h5 class="fw-bold mb-7">基本資料</h5>
+              <!-- <div class="mb-3">
+                  <h6>電子信箱</h6>
+                  <p>{{ userInfo.email }}</p>
+                </div>
+                <div>
+                  <h6 class="fw-bold">電子信箱</h6>
+                  <input type="password" value="testnumber" class="border-0" />
+                </div>
+                <div class=" ">
+                  <a href="" class="" @click="resetPwd">重設</a>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="fw-bold">舊密碼</h6>
+                  <input type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">新密碼</h6>
+                  <input type="password" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <h6 class="fw-bold">確認新密碼</h6>
+                  <input type="password" class="form-control" />
+                </div> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 我的訂單 -->
+        <div class="tab-pane fade" id="userOrder" role="tabpanel" aria-labelledby="userOrder-tab">
+          <div class="row">
+            <div class="col bg-white p-7 rounded-4">我的訂單</div>
+            <div class="col bg-white p-7 rounded-4">我的訂單</div>
+          </div>
         </div>
       </div>
-    </nav>
-
-    <main class="site_mainContent">
-      <div class="content">
-        <RouterView />
-      </div>
-    </main>
-
-    <footer class="site_footer bg-black text-white">
-      <div class="row g-3">
-        <div class="col-auto flex-fill">
-          <img
-            class="mb-7"
-            src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/logo.png?raw=true"
-            alt="Logo"
-            height="72"
-          />
-
-          <ul class="list-unstyled d-flex">
-            <li class="me-3">
-              <img src="@/assets/images/icons/LINE.png" alt="LINE" height="40" />
-            </li>
-            <li><img src="@/assets/images/icons/IG.png" alt="IG" height="40" /></li>
-          </ul>
-        </div>
-        <div class="col-auto">
-          <p class="mb-7">TEL <br />+886-7-1234567</p>
-          <p>FAX<br />+886-7-1234567</p>
-        </div>
-        <div class="col-auto">
-          <p class="mb-7">MAIL<br />elh@hexschool.com</p>
-          <p>WEB<br />www.elhhexschool.com.tw</p>
-        </div>
-      </div>
-
-      <div class="row mt-8 justify-content-between">
-        <div class="col-auto">806023 台灣高雄市新興區六角路123號</div>
-        <div class="col-auto">© 享樂酒店 2023 All Rights Reserved.</div>
-      </div>
-    </footer>
-  </div> -->
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -107,15 +142,22 @@ export default {
       // isScrolled: false
       userName: '' as string,
       userInfo: {
-        name: '' as string
-      }
+        name: '' as string,
+        email: '' as string
+      },
+      showResetPwd: false
     }
   },
   methods: {
-    ...mapActions(userAuthStore, ['getUserAccount'])
+    ...mapActions(userAuthStore, ['getUserAccount']),
+
     // handleScroll() {
     //   this.isScrolled = window.scrollY > 0
     // }
+
+    resetPwd(): void {
+      this.showResetPwd = true
+    }
   },
   mounted() {
     this.userInfo = this.getUserAccount()
@@ -125,11 +167,6 @@ export default {
     // window.addEventListener('scroll', this.handleScroll)
   }
 }
-// export default defineComponent({
-//     setup() {
-
-//     },
-// })
 </script>
 
 <style scoped="scss">
