@@ -1,17 +1,3 @@
-// {
-//   "files": [],
-//   "references": [
-//     {
-//       "path": "./tsconfig.node.json"
-//     },
-//     {
-//       "path": "./tsconfig.app.json"
-//     },
-//     {
-//       "path": "./tsconfig.vitest.json"
-//     }
-//   ]
-// }
 {
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
@@ -46,7 +32,8 @@
     // "paths": {},  
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "vitest/config": ["node_modules/vitest/config"]
     }   ,                                 /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

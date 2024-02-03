@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const serviceAxios = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_HOST,
+  baseURL: 'https://hexschool-freyja.onrender.com/api/v1/',
   timeout: 1000,
   headers: {
     'Content-Type': 'application/json'

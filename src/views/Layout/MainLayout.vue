@@ -99,7 +99,7 @@
 
 <script lang="ts">
 import { mapActions } from 'pinia'
-import { userAuthStore } from '@/stores/userAuthStore.js'
+import { userAuthStore } from '@/stores/userAuthStore'
 export default {
   data() {
     return {

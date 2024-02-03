@@ -15,19 +15,23 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 
 // vee-validate
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
-import AllRules from '@vee-validate/rules'
+// import AllRules from '@vee-validate/rules'
+import * as AllRules from '@vee-validate/rules';
+
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
-interface Rules {
-  [key: string]: any;
-}
+// interface Rules {
+//   [key: string]: any;
+// }
 
-const rules: Rules = AllRules;
+// const rules: Rules = AllRules;
 
 // 使用 Object.keys 設置規則
-Object.keys(rules).forEach((rule) => {
-  defineRule(rule, rules[rule]);
+Object.keys(AllRules).forEach((rule) => {
+  // defineRule(rule, rules[rule]);
+      defineRule(rule, (AllRules as Record<string, any>)[rule]);
+
 });
 // Object.keys(AllRules).forEach((rule) => {
 //   defineRule(rule, AllRules[rule])
@@ -37,8 +41,7 @@ configure({
   generateMessage: localize({ zh_TW: zhTW }),
   validateOnInput: true,
   validateOnBlur: true
-  // validateOnChange:true,
-  // validateOnModelUpdate: true
+  
 })
 setLocale('zh_TW')
 
@@ -54,15 +57,15 @@ const app = createApp(App)
 // app.config.globalProperties.$axios = serviceAxios
 
 // 在開發環境下，保留 console.log
-if (import.meta.env.MODE === 'development') {
-  (window as any).originalConsoleLog = console.log
-  console.log = function () {
-    (window as any).originalConsoleLog.apply(console, arguments)
-  }
-} else {
-  // 在正式環境下，註解 console.log
-  console.log = function () {}
-}
+// if (import.meta.env.MODE === 'development') {
+//   (window as any).originalConsoleLog = console.log
+//   console.log = function () {
+//     (window as any).originalConsoleLog.apply(console, arguments)
+//   }
+// } else {
+//   // 在正式環境下，註解 console.log
+//   console.log = function () {}
+// }
 
 //vee-validate 必填
 app.directive('required', {

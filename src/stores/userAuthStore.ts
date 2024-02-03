@@ -6,7 +6,7 @@ export const userAuthStore = defineStore('userAuthStore', {
 
   getters: {},
   actions: {
-    getCookie(cookieName) {
+    getCookie(cookieName :string) {
       const cookieStr = decodeURIComponent(document.cookie)
       const cookies = cookieStr.split(';')
       for (let i = 0; i < cookies.length; i++) {
@@ -25,9 +25,14 @@ export const userAuthStore = defineStore('userAuthStore', {
     getUserAccount() {
       const rawCookieValue = this.getCookie('userInfo')
       try {
-        const parsedValue = JSON.parse(rawCookieValue)
-        // console.log('Parsed userAccount:', parsedValue);
-        return parsedValue
+        // const parsedValue = JSON.parse(rawCookieValue)
+        // // console.log('Parsed userAccount:', parsedValue);
+        // return parsedValue
+         if (rawCookieValue !== null) {
+    const parsedValue = JSON.parse(rawCookieValue);
+    return parsedValue;
+  }
+  return null;
       } catch (error) {
         console.error('Error parsing cookie value as JSON:', error)
         return null

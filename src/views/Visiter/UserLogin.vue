@@ -72,9 +72,9 @@
 <script lang="ts">
 import Swal from 'sweetalert2'
 
-const apiUrl = import.meta.env.VITE_BACKEND_HOST
+const apiUrl = 'https://hexschool-freyja.onrender.com/api/v1/'
 import { mapActions } from 'pinia'
-import { userAuthStore } from '@/stores/userAuthStore.js'
+import { userAuthStore } from '@/stores/userAuthStore'
 // import { useAlertStore } from '@/stores/alertStore'
 
 export default {
