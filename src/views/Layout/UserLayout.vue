@@ -153,7 +153,7 @@
               </div>
             </v-form>
 
-            <v-form ref="dataForm" v-slot="{ errors }"   class="content_right">
+            <v-form ref="dataForm" v-slot="{ errors }" class="content_right">
               <div class="content_right bg-white p-5 p-md-7 rounded-4 mt-3 mt-lg-0 ms-lg-7">
                 <div class="row flex-column">
                   <h5 class="fw-bold mb-7">基本資料</h5>
@@ -258,7 +258,7 @@
                           name="month"
                           as="select"
                           label="月"
-                          id="birthday"
+                          id="birthday2"
                           class="form-select"
                           :class="{
                             'is-invalid': errors['month']
@@ -277,7 +277,7 @@
                           name="day"
                           as="select"
                           label="日"
-                          id="birthday"
+                          id="birthday3"
                           class="form-select"
                           :class="{
                             'is-invalid': errors['day']
@@ -339,7 +339,7 @@
                           name="county"
                           as="select"
                           label="鄉鎮區"
-                          id="address"
+                          id="address2"
                           class="form-select"
                           :class="{
                             'is-invalid': errors['county']
@@ -367,7 +367,7 @@
                             'is-invalid': errors['detail'],
                             'border-0 p-0 bg-white': !isEditData
                           }"
-                          id="address"
+                          id="address3"
                           placeholder="請輸入詳細地址"
                           v-model="addressSelected.detail"
                           rules="required"
@@ -491,18 +491,18 @@ export default {
     //依據county 取得zipcode
     'addressSelected.county': {
       handler(newValue) {
-        console.log('countyArray', this.countyArray)
-        console.log('newValue', newValue)
+        //console.log('countyArray', this.countyArray)
+        //console.log('newValue', newValue)
 
         let array = this.countyArray.filter((item) => {
-          // console.log('item', item)
+          // //console.log('item', item)
           return item.countyName == newValue.countyName
         })
 
-        console.log('array', array)
+        //console.log('array', array)
         if (array.length > 0) {
           this.addressSelected.zipcode = array[0].ZipCode
-          console.log('this.addressSelected.zipcode', this.addressSelected.zipcode)
+          //console.log('this.addressSelected.zipcode', this.addressSelected.zipcode)
         }
       },
       immediate: true
@@ -534,20 +534,20 @@ export default {
           Accept: 'application/json',
           Authorization: `Bearer ${this.getToken()}`
         }
-        // console.log('this.userAccount', this.userAccount)
-        console.log('data', data)
-        console.log('headers', headers)
-        //   console.log('apiUrl', apiUrl)
+        // //console.log('this.userAccount', this.userAccount)
+        //console.log('data', data)
+        //console.log('headers', headers)
+        //   //console.log('apiUrl', apiUrl)
         ;(this.$refs.resetForm as any).validate().then((result: { valid: boolean }) => {
           if (result.valid) {
             this.axios
               .put(`${apiUrl}user/`, data, { headers })
               .then((res) => {
-                console.log('res', res)
-                console.log('res', JSON.stringify(res.data))
+                //console.log('res', res)
+                //console.log('res', JSON.stringify(res.data))
 
                 if (res.data.status) {
-                  console.log('res', res)
+                  //console.log('res', res)
 
                   Swal.fire({
                     icon: 'success',
@@ -574,7 +574,7 @@ export default {
                 }
               })
               .catch((err) => {
-                console.log('err', err)
+                //console.log('err', err)
                 Swal.fire({
                   icon: 'error',
                   iconColor: '#C22538',
@@ -617,7 +617,7 @@ export default {
         Number(this.birthday.day)
       )
       this.userInfo.birthday = dateObject.toISOString()
-      console.log('this.registerData.birthday', this.userInfo.birthday)
+      //console.log('this.registerData.birthday', this.userInfo.birthday)
     },
 
     // 處理地址
@@ -639,12 +639,12 @@ export default {
       })
       this.cityArray = Object.keys(this.organizedData)
 
-      console.log('123', Object.values(this.organizedData)[0])
-      console.log(' this.cityArray', this.cityArray)
+      //console.log('123', Object.values(this.organizedData)[0])
+      //console.log(' this.cityArray', this.cityArray)
     },
 
     // 處理日期
-    handelBirthday():void {
+    handelBirthday(): void {
       let birthday = this.userInfo.birthday
       const dateObject = new Date(birthday)
 
@@ -652,12 +652,12 @@ export default {
       this.birthday.month = (dateObject.getMonth() + 1).toString()
       this.birthday.day = dateObject.getDate().toString()
 
-      console.log('birthday', birthday)
+      //console.log('birthday', birthday)
     }
     //
     // updateValue() {
     //   // this.userInfo.isCheckRule = !this.registerData.isCheckRule.toString()
-    //   console.log(
+    //   //console.log(
     //     'this.registerData.isCheckRule',
     //     this.userInfo.isCheckRule,
     //     typeof this.userInfo.isCheckRule
@@ -672,9 +672,9 @@ export default {
       this.addressSelected.city = this.userInfo.address.city
       this.addressSelected.zipcode = this.userInfo.address.zipcode
       // this.userName =
-      console.log('userinfo', this.userInfo)
-      console.log('document.cookie', document.cookie)
-      console.log(' this.addressSelected', this.addressSelected)
+      //console.log('userinfo', this.userInfo)
+      //console.log('document.cookie', document.cookie)
+      //console.log(' this.addressSelected', this.addressSelected)
       this.handleAddressSelect()
       this.handelBirthday()
     } else {

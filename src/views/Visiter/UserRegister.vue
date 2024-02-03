@@ -323,16 +323,16 @@ defineRule('password', (value: string) => {
   const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
   return phoneNumberRegex.test(value)
 })
- 
+
 
 interface postSignUpData {
   name: string
   email: string
   password: string
-  
+
   phone: string
   birthday: string
-   
+
   address: {
     zipcode: number
     detail: string
@@ -350,7 +350,7 @@ export default {
         name: '' as string,
         phone: '' as string,
         birthday: '' as string,
-       
+
         isCheckRule: false as boolean
       },
 
@@ -390,18 +390,18 @@ export default {
     //依據county 取得zipcode
     'addressSelected.county': {
       handler(newValue) {
-        console.log('countyArray', this.countyArray)
-        console.log('newValue', newValue)
+        //console.log('countyArray', this.countyArray)
+        //console.log('newValue', newValue)
 
         let array = this.countyArray.filter((item) => {
-          console.log('item', item)
+          //console.log('item', item)
           return item.countyName == newValue.countyName
         })
 
-        console.log('array', array)
+        //console.log('array', array)
         if (array.length > 0) {
           this.addressSelected.zipcode = array[0].ZipCode
-          console.log('this.addressSelected.zipcode', this.addressSelected.zipcode)
+          //console.log('this.addressSelected.zipcode', this.addressSelected.zipcode)
         }
       },
       immediate: true
@@ -418,7 +418,7 @@ export default {
         ;(this.$refs.step1Form as any).validate().then((result: { valid: boolean }) => {
           if (result.valid) {
             // this.userStep = num
-            // console.log('this.userStep', this.userStep)
+            // //console.log('this.userStep', this.userStep)
             // 先驗證 email 是否註冊過
             let headers = {
               'Content-Type': 'application/json',
@@ -463,7 +463,7 @@ export default {
                 }
               })
               .catch((err) => {
-                console.log('err', err)
+                //console.log('err', err)
                 Swal.fire({
                   icon: 'error',
                   iconColor: '#C22538',
@@ -500,15 +500,15 @@ export default {
           }
         }
 
-        console.log('---data', data)
+        //console.log('---data', data)
         ;(this.$refs.step2Form as any).validate().then((result: any) => {
           if (result.valid) {
             this.axios
               .post(`${apiUrl}user/signup`, data, { headers })
               .then((res) => {
                 if (res.data.status) {
-                  console.log('res', res)
-                  console.log('res', JSON.stringify(res.data))
+                  //console.log('res', res)
+                  //console.log('res', JSON.stringify(res.data))
                   // document.cookie = `loginToken=${res.data.token};  path=/ ;`
                   // document.cookie = `userInfo=${res.data.result};  path=/ ;`
 
@@ -539,7 +539,7 @@ export default {
                 }
               })
               .catch((err) => {
-                console.log('err', err)
+                //console.log('err', err)
                 Swal.fire({
                   icon: 'error',
                   iconColor: '#C22538',
@@ -575,7 +575,7 @@ export default {
         Number(this.birthday.day)
       )
       this.registerData.birthday = dateObject.toISOString()
-      console.log('this.registerData.birthday', this.registerData.birthday)
+      //console.log('this.registerData.birthday', this.registerData.birthday)
     },
 
     // 處理地址
@@ -597,18 +597,18 @@ export default {
       })
       this.cityArray = Object.keys(this.organizedData)
 
-      console.log('123', Object.values(this.organizedData)[0])
-      console.log(' this.cityArray', this.cityArray)
+      //console.log('123', Object.values(this.organizedData)[0])
+      //console.log(' this.cityArray', this.cityArray)
     },
 
     //
     updateValue() {
-      this.registerData.isCheckRule = !this.registerData.isCheckRule.toString()
-      console.log(
-        'this.registerData.isCheckRule',
-        this.registerData.isCheckRule,
-        typeof this.registerData.isCheckRule
-      )
+      this.registerData.isCheckRule = !this.registerData.isCheckRule.toString();
+      //console.log(
+      //   'this.registerData.isCheckRule',
+      //   this.registerData.isCheckRule,
+      //   typeof this.registerData.isCheckRule
+      // )
     }
   },
   mounted() {

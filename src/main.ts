@@ -21,21 +21,31 @@ import * as AllRules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
-interface Rules {
-  [key: string]: any;
-}
 
-const rules: Rules = AllRules;
+// interface Rules {
+//   [key: string]: any;
+// }
 
-// 使用 Object.keys 設置規則
-Object.keys(AllRules).forEach((rule) => {
-  defineRule(rule, rules[rule]);
-      // defineRule(rule, (AllRules as Record<string, any>)[rule]);
+// const rules: Rules = AllRules;
 
-});
+
+// // 使用 Object.keys 設置規則
 // Object.keys(AllRules).forEach((rule) => {
-//   defineRule(rule, AllRules[rule])
-// })
+//   // @ts-ignore
+//    defineRule(rule, AllRules[rule])
+//   // defineRule(rule, rules[rule]);
+//       // defineRule(rule, (AllRules as Record<string, any>)[rule]);
+
+// });
+defineRule('required', AllRules.required);
+defineRule('email', AllRules.email);
+defineRule('min', AllRules.min);
+defineRule('max', AllRules.max);
+
+// Object.keys(AllRules).forEach((rule) => {
+//   // @ts-ignore
+//   defineRule(rule, (AllRules as Record<string, any>)[rule]);
+// });
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
@@ -56,15 +66,15 @@ const app = createApp(App)
 // import serviceAxios from '@/utils/axiosInterceptor.js'
 // app.config.globalProperties.$axios = serviceAxios
 
-// 在開發環境下，保留 console.log
+// 在開發環境下，保留 //console.log
 // if (import.meta.env.MODE === 'development') {
-//   (window as any).originalConsoleLog = console.log
-//   console.log = function () {
-//     (window as any).originalConsoleLog.apply(console, arguments)
+//   (window as any).original//consoleLog = //console.log
+//   //console.log = function () {
+//     (window as any).original//consoleLog.apply(//console, arguments)
 //   }
 // } else {
-//   // 在正式環境下，註解 console.log
-//   console.log = function () {}
+//   // 在正式環境下，註解 //console.log
+//   //console.log = function () {}
 // }
 
 //vee-validate 必填

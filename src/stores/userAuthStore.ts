@@ -26,7 +26,7 @@ export const userAuthStore = defineStore('userAuthStore', {
       const rawCookieValue = this.getCookie('userInfo')
       try {
         // const parsedValue = JSON.parse(rawCookieValue)
-        // // console.log('Parsed userAccount:', parsedValue);
+        // // //console.log('Parsed userAccount:', parsedValue);
         // return parsedValue
          if (rawCookieValue !== null) {
     const parsedValue = JSON.parse(rawCookieValue);
@@ -34,7 +34,7 @@ export const userAuthStore = defineStore('userAuthStore', {
   }
   return null;
       } catch (error) {
-        console.error('Error parsing cookie value as JSON:', error)
+        //console.error('Error parsing cookie value as JSON:', error)
         return null
       }
       // return this.getCookie('userAccount')

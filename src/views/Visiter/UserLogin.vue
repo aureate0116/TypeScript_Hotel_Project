@@ -92,27 +92,27 @@ export default {
   methods: {
     ...mapActions(userAuthStore, ['getUserEmail']),
 
-    userLogin() :void {
+    userLogin(): void {
       let data = this.userAccount
       let headers = {
         'Content-Type': 'application/json',
         Accept: 'application/json'
       }
-      console.log('this.userAccount', this.userAccount)
-      console.log('data', data)
-      //   console.log('apiUrl', apiUrl)
+      //console.log('this.userAccount', this.userAccount)
+      //console.log('data', data)
+      //   //console.log('apiUrl', apiUrl)
       if (this.$refs.myForm) {
         ;(this.$refs.myForm as any).validate().then((result: { valid: boolean }) => {
           if (result.valid) {
             this.axios
               .post(`${apiUrl}user/login`, data, { headers })
               .then((res) => {
-                console.log('res', res)
-                console.log('res', JSON.stringify(res.data))
+                //console.log('res', res)
+                //console.log('res', JSON.stringify(res.data))
 
                 if (res.data.status) {
-                  console.log('res', res)
-                  console.log('res', JSON.stringify(res.data))
+                  //console.log('res', res)
+                  //console.log('res', JSON.stringify(res.data))
                   document.cookie = `loginToken=${res.data.token};  path=/ ;`
                   document.cookie = `userInfo=${JSON.stringify(res.data.result)};  path=/ ;`
 
@@ -131,7 +131,7 @@ export default {
                 }
               })
               .catch((err) => {
-                console.log('err', err)
+                //console.log('err', err)
                 Swal.fire({
                   icon: 'error',
                   iconColor: '#C22538',
@@ -157,7 +157,7 @@ export default {
   },
   mounted() {
     // let rem = this.getUserEmail()
-    // console.log('rem', rem)
+    // //console.log('rem', rem)
     if (this.getUserEmail()) {
       this.loginSetting.isRememberAccount = true
       const userEmail = this.getUserEmail()
