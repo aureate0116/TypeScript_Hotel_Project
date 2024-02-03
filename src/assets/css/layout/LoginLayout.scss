@@ -4,16 +4,7 @@
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/bootstrap';
 
-.login_layout {
-  .navbar-brand {
-    img {
-      height: 40px;
-      @include media-breakpoint-up(md) {
-        height: 72px;
-      }
-    }
-  }
-}
+
 
 .stepper {
   .dot {

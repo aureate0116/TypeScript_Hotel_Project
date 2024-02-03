@@ -116,7 +116,7 @@ export default {
                   document.cookie = `loginToken=${res.data.token};  path=/ ;`
                   document.cookie = `userInfo=${JSON.stringify(res.data.result)};  path=/ ;`
 
-                  this.$router.push({ name: 'home' })
+                  this.$router.push({ name: 'userCenter' })
                 } else {
                   Swal.fire({
                     icon: 'error',

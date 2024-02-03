@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0 overflow-hidden bg-black login_layout" style="min-height: 100vh">
+  <div class="container-fluid p-0 overflow-hidden bg-black " style="min-height: 100vh">
     <nav class="navbar navbar-dark navbar-expand-lg py-lg-3 px-lg-7 bg-black">
       <div class="container-fluid flex-row">
         <router-link class="navbar-brand mx-0" to="/"

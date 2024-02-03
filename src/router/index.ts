@@ -22,12 +22,7 @@ const router = createRouter({
         }
       ]
     },
-    // {
-    //   path: '/login',
-    //   name: 'login',
-    //   component: () => import('@/views/FunctionLayout.vue')
-    //   // meta: { breadcrumb: '' },
-    // },
+     
     {
       path: '/',
       // name: 'home',
@@ -42,7 +37,7 @@ const router = createRouter({
 
         {
           path: '/userCenter',
-          name: '',
+          name: 'userCenter',
           component: () => import('@/views/Layout/UserLayout.vue')
           // meta: { breadcrumb: '' },
           // children: [

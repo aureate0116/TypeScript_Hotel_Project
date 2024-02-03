@@ -2,21 +2,20 @@
   <!-- -->
   <div class="container-fluid p-0 bg-black">
     <div class="user_center_banner">
-      <div class="container d-flex align-items-center">
+      <div class="container d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
         <img
           src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/user1.png?raw=true"
-          alt="Logo"
-          height="144"
+          alt="img"
         />
 
-        <h1 class="text-white ms-5">Hello，{{ userInfo.name }}</h1>
+        <h1 class="text-white">Hello，{{ userInfo.name }}</h1>
       </div>
     </div>
 
     <!-- 會員中心選單 tab  -->
 
     <div class="container">
-      <ul class="nav user_center_menu py-8" id="userInfo" role="tablist">
+      <ul class="nav user_center_menu py-7 py-lg-8" id="userInfo" role="tablist">
         <li class="nav-item" role="presentation">
           <!-- userData -->
           <button
@@ -56,9 +55,9 @@
           role="tabpanel"
           aria-labelledby="userData-tab"
         >
-          <div class="d-flex justify-content-between">
+          <div class="d-flex flex-column flex-lg-row justify-content-between">
             <v-form ref="resetForm" v-slot="{ errors }" @submit="saveAccount">
-              <div class="content_left bg-white p-7 rounded-4">
+              <div class="content_left bg-white p-5 p-md-7 rounded-4">
                 <h5 class="fw-bold mb-7">修改密碼</h5>
                 <div class="mb-3">
                   <h6>電子信箱</h6>
@@ -101,7 +100,7 @@
               </div>
             </v-form>
 
-            <div class="content_right bg-white p-7 rounded-4 ms-7">
+            <div class="content_right bg-white p-5 p-md-7 rounded-4 mt-3 ms-lg-7">
               <v-form ref="dataForm" v-slot="{ errors }" @submit="saveUserData">
                 <h5 class="fw-bold mb-7">基本資料</h5>
 
@@ -162,13 +161,14 @@
                     <label v-else class="form-label" for="birthday" label="生日" v-required="true"
                       >生日</label
                     >
+
                     <div class="row g-2">
                       <div class="col-md-4">
                         <input
                           type="text"
                           v-if="!isEditData"
                           class="form-control border-0 p-0 bg-white"
-                          v-model="birthday.year"
+                          :value="`${birthday.year} 年 ${birthday.month} 月 ${birthday.day} 日`"
                           disabled
                         />
                         <v-field
@@ -194,16 +194,15 @@
                           </option>
                         </v-field>
                       </div>
-                      <div class="col-md-4">
-                        <input
+                      <div class="col-md-4" v-if="isEditData">
+                        <!-- <input
                           type="text"
                           v-if="!isEditData"
                           class="form-control border-0 p-0 bg-white"
                           v-model="birthday.month"
                           disabled
-                        />
+                        /> -->
                         <v-field
-                          v-else
                           name="month"
                           as="select"
                           label="月"
@@ -221,16 +220,8 @@
                           </option>
                         </v-field>
                       </div>
-                      <div class="col-md-4">
-                        <input
-                          type="text"
-                          v-if="!isEditData"
-                          class="form-control border-0 p-0 bg-white"
-                          v-model="birthday.day"
-                          disabled
-                        />
+                      <div class="col-md-4" v-if="isEditData">
                         <v-field
-                          v-else
                           name="day"
                           as="select"
                           label="日"
@@ -449,7 +440,7 @@ export default {
         console.log('newValue', newValue)
 
         let array = this.countyArray.filter((item) => {
-          console.log('item', item)
+          // console.log('item', item)
           return item.countyName == newValue.countyName
         })
 
@@ -526,8 +517,19 @@ export default {
 
       console.log('123', Object.values(this.organizedData)[0])
       console.log(' this.cityArray', this.cityArray)
-    }
+    },
 
+    // 處理日期
+    handelBirthday() {
+      let birthday = this.userInfo.birthday
+      const dateObject = new Date(birthday)
+
+      this.birthday.year = dateObject.getFullYear().toString()
+      this.birthday.month = (dateObject.getMonth() + 1).toString()
+      this.birthday.day = dateObject.getDate().toString()
+
+      console.log('birthday', birthday)
+    }
     //
     // updateValue() {
     //   // this.userInfo.isCheckRule = !this.registerData.isCheckRule.toString()
@@ -550,6 +552,7 @@ export default {
     console.log('document.cookie', document.cookie)
     console.log(' this.addressSelected', this.addressSelected)
     this.handleAddressSelect()
+    this.handelBirthday()
     // window.addEventListener('scroll', this.handleScroll)
   }
 }

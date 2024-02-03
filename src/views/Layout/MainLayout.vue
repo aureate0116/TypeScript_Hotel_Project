@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid p-0 overflow-hidden">
     <nav
-      class="navbar site_layout_navbar navbar-expand-lg   fixed-top"
+      class="navbar navbar-dark site_layout_navbar navbar-expand-lg fixed-top"
       :class="{ 'bg-black': $route.path !== '/' }"
     >
       <div class="container-fluid">
@@ -12,7 +12,7 @@
             height="72"
         /></router-link>
         <button
-          class="navbar-toggler"
+          class="navbar-toggler border-0"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -31,9 +31,18 @@
               <a class="nav-link text-white" href="#">客房旅宿</a>
             </li>
             <li class="nav-item px-3">
-              <router-link :to="{ name: 'login' }" class="nav-link text-white" href="#"
-                >會員登入</router-link
-              >
+              <template v-if="getToken()">
+                <router-link :to="{ name: 'userCenter' }" class="nav-link text-white" href="#">
+                  <img src="@/assets/images/icons/user.png" alt="icon" height="20" class="me-1" />
+                  {{ getUserAccount().name }}</router-link
+                >
+              </template>
+
+              <template v-else>
+                <router-link :to="{ name: 'login' }" class="nav-link text-white" href="#"
+                  >會員登入</router-link
+                >
+              </template>
             </li>
 
             <li class="nav-item px-3">
@@ -50,8 +59,11 @@
       </div>
     </main>
 
+    <div class="container-fluid bg-black site_footer_top px-0 pt-4">
+      <img src="@/assets/images/line2.png" alt="line" />
+    </div>
     <footer class="site_footer bg-black text-white">
-      <div class="row g-3">
+      <div class="row g-3 flex-column flex-lg-row">
         <div class="col-auto flex-fill">
           <img
             class="mb-7"
@@ -86,21 +98,29 @@
 </template>
 
 <script lang="ts">
-// import { defineComponent } from '@vue/composition-api'
-
+import { mapActions, mapState } from 'pinia'
+import { userAuthStore } from '@/stores/userAuthStore.js'
 export default {
   data() {
     return {
-      isScrolled: false
+      isScrolled: false,
+      // isLogin:false,
+      userInfo: {} as object
     }
   },
   methods: {
+    ...mapActions(userAuthStore, ['getUserAccount', 'getToken']),
     handleScroll() {
       this.isScrolled = window.scrollY > 0
     }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
+
+    if (this.getUserAccount()) {
+      console.log('layout', this.getUserAccount())
+      console.log('layout', this.getToken())
+    }
   }
 }
 // export default defineComponent({
