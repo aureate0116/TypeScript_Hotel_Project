@@ -14,7 +14,9 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 
 // vee-validate
+// import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
+
 // import AllRules from '@vee-validate/rules'
 import * as AllRules from '@vee-validate/rules';
 
@@ -41,7 +43,18 @@ defineRule('required', AllRules.required);
 defineRule('email', AllRules.email);
 defineRule('min', AllRules.min);
 defineRule('max', AllRules.max);
+defineRule('confirmed', AllRules.confirmed);
 
+
+defineRule('phone', (value: string) => {
+  const phoneNumberRegex = /^09\d{8}$/i //
+  return phoneNumberRegex.test(value)
+})
+
+defineRule('password', (value: string) => {
+  const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
+  return phoneNumberRegex.test(value)
+})
 // Object.keys(AllRules).forEach((rule) => {
 //   // @ts-ignore
 //   defineRule(rule, (AllRules as Record<string, any>)[rule]);

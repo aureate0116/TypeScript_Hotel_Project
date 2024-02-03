@@ -422,17 +422,17 @@ import Swal from 'sweetalert2'
 
 const apiUrl = 'https://hexschool-freyja.onrender.com/api/v1/'
 
-import { defineRule } from 'vee-validate'
+// import { defineRule } from 'vee-validate'
 
-defineRule('phone', (value: string) => {
-  const phoneNumberRegex = /^09\d{8}$/i //
-  return phoneNumberRegex.test(value)
-})
+// defineRule('phone', (value: string) => {
+//   const phoneNumberRegex = /^09\d{8}$/i //
+//   return phoneNumberRegex.test(value)
+// })
 
-defineRule('password', (value: string) => {
-  const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
-  return phoneNumberRegex.test(value)
-})
+// defineRule('password', (value: string) => {
+//   const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
+//   return phoneNumberRegex.test(value)
+// })
 
 export default {
   data() {
