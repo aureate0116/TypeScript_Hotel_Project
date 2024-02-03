@@ -54,15 +54,15 @@ const app = createApp(App)
 // app.config.globalProperties.$axios = serviceAxios
 
 // 在開發環境下，保留 console.log
-// if (import.meta.env.MODE === 'development') {
-//   window.originalConsoleLog = console.log
-//   console.log = function () {
-//     window.originalConsoleLog.apply(console, arguments)
-//   }
-// } else {
-//   // 在正式環境下，註解 console.log
-//   console.log = function () {}
-// }
+if (import.meta.env.MODE === 'development') {
+  (window as any).originalConsoleLog = console.log
+  console.log = function () {
+    (window as any).originalConsoleLog.apply(console, arguments)
+  }
+} else {
+  // 在正式環境下，註解 console.log
+  console.log = function () {}
+}
 
 //vee-validate 必填
 app.directive('required', {

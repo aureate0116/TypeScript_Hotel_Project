@@ -323,20 +323,16 @@ defineRule('password', (value: string) => {
   const phoneNumberRegex = /^(?=.*[A-Za-z]).*$/ //
   return phoneNumberRegex.test(value)
 })
-// 處理年月日
-// const year = new Date().getFullYear()
-// const month = 1 as number
-// const monthDays = 31 as number
+ 
 
 interface postSignUpData {
   name: string
   email: string
   password: string
-  // confirmPassword: string;
-  // name: string;
+  
   phone: string
   birthday: string
-  // isCheckRule: boolean;
+   
   address: {
     zipcode: number
     detail: string
@@ -354,7 +350,7 @@ export default {
         name: '' as string,
         phone: '' as string,
         birthday: '' as string,
-        // address: '' as string
+       
         isCheckRule: false as boolean
       },
 

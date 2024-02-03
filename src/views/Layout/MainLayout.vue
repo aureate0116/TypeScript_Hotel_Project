@@ -5,12 +5,12 @@
       :class="{ 'bg-black': $route.path !== '/' }"
     >
       <div class="container-fluid">
-        <router-link class="navbar-brand p-0" to="/"
+        <a class="navbar-brand p-0" 
           ><img
             src="https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/logo.png?raw=true"
             alt="Logo"
             height="72"
-        /></router-link>
+        /></a>
         <button
           class="navbar-toggler border-0"
           type="button"
@@ -28,7 +28,7 @@
               <a class="nav-link active" aria-current="page" href="#">Home</a>
             </li> -->
             <li class="nav-item px-3">
-              <a class="nav-link text-white" href="#">客房旅宿</a>
+              <a class="nav-link text-white" >客房旅宿</a>
             </li>
             <li class="nav-item px-3">
               <template v-if="getToken()">
@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'pinia'
+import { mapActions } from 'pinia'
 import { userAuthStore } from '@/stores/userAuthStore.js'
 export default {
   data() {

@@ -8,7 +8,7 @@
           alt="img"
         />
 
-        <h1 class="text-white">Hello，{{ userInfo.name }}</h1>
+        <h1 class="text-white">Hello，{{ userInfo?.name }}</h1>
       </div>
     </div>
 
@@ -56,22 +56,29 @@
           aria-labelledby="userData-tab"
         >
           <div class="d-flex flex-column flex-lg-row justify-content-between">
-            <v-form ref="resetForm" v-slot="{ errors }" @submit="saveAccount">
+            <v-form
+              ref="resetForm"
+              v-slot="{ errors }"
+              @submit.prevent="saveAccount"
+              class="content_left"
+            >
               <div class="content_left bg-white p-5 p-md-7 rounded-4">
                 <h5 class="fw-bold mb-7">修改密碼</h5>
                 <div class="mb-3">
                   <h6>電子信箱</h6>
                   <p class="fw-bold">{{ userInfo.email }}</p>
                 </div>
-                <div class="row w-100 align-items-center mb-3" v-if="!showResetPwd">
+                <div class="row align-items-center mb-3">
                   <div class="col">
                     <h6>密碼</h6>
-                    <input type="password" value="testnumber" class="border-0 fw-bold" />
+                    <div v-if="!showResetPwd">
+                      <input type="password" value="testnumber" class="border-0 fw-bold" disabled />
+                    </div>
                   </div>
                   <div class="col text-end">
                     <button
                       class="btn border-0 text-primary text-decoration-underline"
-                      @click="resetPwd"
+                      @click.prevent="resetPwd"
                     >
                       重設
                     </button>
@@ -80,15 +87,61 @@
 
                 <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">舊密碼</h6>
-                  <input type="password" class="form-control" placeholder="請輸入舊密碼" />
+                  <!-- <v-field
+                    type="password"
+                    class="form-control"
+                    placeholder="請輸入舊密碼"
+                    v-model="userInfo.oldPassword"
+                  /> -->
+
+                  <v-field
+                    name="oldPassword"
+                    label="舊密碼"
+                    type="password"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['oldPassword'] }"
+                    id="oldPassword"
+                    placeholder="請輸入舊密碼"
+                    v-model="userInfo.oldPassword"
+                    rules="required|min:8|password"
+                  />
+                  <ErrorMessage name="oldPassword" class="invalid-feedback"></ErrorMessage>
                 </div>
                 <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">新密碼</h6>
-                  <input type="password" class="form-control" placeholder="請輸入新密碼" />
+                  <!-- <v-field
+                    type="password"
+                    class="form-control"
+                    placeholder="請輸入新密碼"
+                    v-model="userInfo.newPassword"
+                  /> -->
+                  <v-field
+                    name="newPassword"
+                    label="新密碼"
+                    type="password"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['newPassword'] }"
+                    id="newPassword"
+                    placeholder="請輸入新密碼"
+                    v-model="userInfo.newPassword"
+                    rules="required|min:8|password"
+                  />
+                  <ErrorMessage name="newPassword" class="invalid-feedback"></ErrorMessage>
                 </div>
                 <div class="mb-3" v-if="showResetPwd">
                   <h6 class="fw-bold">確認新密碼</h6>
-                  <input type="password" class="form-control" placeholder="請再輸入一次新密碼" />
+                  <v-field
+                    name="confirmPassword"
+                    label="確認新密碼"
+                    type="password"
+                    class="form-control"
+                    :class="{ 'is-invalid': errors['confirmPassword'] }"
+                    id="confirmPassword"
+                    placeholder="請再輸入一次密碼"
+                    v-model="userInfo.confirmPwd"
+                    rules="required|confirmed:@newPassword"
+                  />
+                  <ErrorMessage name="confirmPassword" class="invalid-feedback"></ErrorMessage>
                 </div>
                 <button
                   v-if="showResetPwd"
@@ -100,11 +153,10 @@
               </div>
             </v-form>
 
-            <div class="content_right bg-white p-5 p-md-7 rounded-4 mt-3 ms-lg-7">
-              <v-form ref="dataForm" v-slot="{ errors }" @submit="saveUserData">
-                <h5 class="fw-bold mb-7">基本資料</h5>
-
+            <v-form ref="dataForm" v-slot="{ errors }"   class="content_right">
+              <div class="content_right bg-white p-5 p-md-7 rounded-4 mt-3 mt-lg-0 ms-lg-7">
                 <div class="row flex-column">
+                  <h5 class="fw-bold mb-7">基本資料</h5>
                   <div class="col mb-3">
                     <label v-if="!isEditData" class="form-label" for="name">姓名</label>
                     <label v-else class="form-label" for="name" v-required="true">姓名</label>
@@ -344,13 +396,13 @@
                     </button>
                   </div>
                 </div>
-              </v-form>
-            </div>
+              </div>
+            </v-form>
           </div>
         </div>
 
-        <!-- 我的訂單 -->
-        <div class="tab-pane fade" id="userOrder" role="tabpanel" aria-labelledby="userOrder-tab">
+        <!-- 我的訂單  id="userOrder"-->
+        <div class="tab-pane fade" role="tabpanel" aria-labelledby="userOrder-tab">
           <div class="row">
             <div class="col bg-white p-7 rounded-4">我的訂單</div>
             <div class="col bg-white p-7 rounded-4">我的訂單</div>
@@ -362,7 +414,7 @@
 </template>
 
 <script lang="ts">
-import { mapActions, mapState } from 'pinia'
+import { mapActions } from 'pinia'
 import { userAuthStore } from '@/stores/userAuthStore.js'
 
 import ZipCodeMap from '@/utils/zipcodes'
@@ -397,7 +449,10 @@ export default {
           detail: '' as string,
           zipcode: '' as string,
           county: '' as string
-        }
+        },
+        oldPassword: '' as string,
+        confirmPwd: '' as string,
+        newPassword: '' as string
       },
 
       organizedData: {} as {
@@ -417,9 +472,9 @@ export default {
       dayRange: 0 as number,
 
       birthday: {
-        year: '',
-        month: '',
-        day: ''
+        year: '' as string,
+        month: '' as string,
+        day: '' as string
       },
       showResetPwd: false,
       isEditData: false
@@ -458,13 +513,82 @@ export default {
     'birthday.day': { handler: 'handleBirthdayChange', immediate: true }
   },
   methods: {
-    ...mapActions(userAuthStore, ['getUserAccount']),
+    ...mapActions(userAuthStore, ['getUserAccount', 'getToken']),
 
     resetPwd(): void {
       this.showResetPwd = true
     },
+
     saveAccount(): void {
-      this.showResetPwd = false
+      if (this.$refs.resetForm) {
+        let data = {
+          ...this.userInfo
+        }
+
+        // delete data.confirmPwd
+        // delete data.address.county
+        // delete data.address.city
+
+        let headers = {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${this.getToken()}`
+        }
+        // console.log('this.userAccount', this.userAccount)
+        console.log('data', data)
+        console.log('headers', headers)
+        //   console.log('apiUrl', apiUrl)
+        ;(this.$refs.resetForm as any).validate().then((result: { valid: boolean }) => {
+          if (result.valid) {
+            this.axios
+              .put(`${apiUrl}user/`, data, { headers })
+              .then((res) => {
+                console.log('res', res)
+                console.log('res', JSON.stringify(res.data))
+
+                if (res.data.status) {
+                  console.log('res', res)
+
+                  Swal.fire({
+                    icon: 'success',
+                    iconColor: '#dc3545',
+                    title: '修改成功',
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+                  this.showResetPwd = false
+                } else {
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#dc3545',
+                    title: res.data.message,
+                    showConfirmButton: false,
+                    width: '400px',
+                    customClass: {
+                      title: 'fs-4'
+                    }
+                  })
+                }
+              })
+              .catch((err) => {
+                console.log('err', err)
+                Swal.fire({
+                  icon: 'error',
+                  iconColor: '#C22538',
+                  title: err.response.data.message,
+                  showConfirmButton: false,
+                  width: '400px',
+                  customClass: {
+                    title: 'fs-4'
+                  }
+                })
+              })
+          }
+        })
+      }
     },
 
     changeStateToEdit(): void {
@@ -520,7 +644,7 @@ export default {
     },
 
     // 處理日期
-    handelBirthday() {
+    handelBirthday():void {
       let birthday = this.userInfo.birthday
       const dateObject = new Date(birthday)
 
@@ -542,17 +666,21 @@ export default {
   },
   mounted() {
     this.userInfo = this.getUserAccount()
+    if (this.userInfo) {
+      this.addressSelected.detail = this.userInfo.address.detail
+      this.addressSelected.county = this.userInfo.address.county
+      this.addressSelected.city = this.userInfo.address.city
+      this.addressSelected.zipcode = this.userInfo.address.zipcode
+      // this.userName =
+      console.log('userinfo', this.userInfo)
+      console.log('document.cookie', document.cookie)
+      console.log(' this.addressSelected', this.addressSelected)
+      this.handleAddressSelect()
+      this.handelBirthday()
+    } else {
+      this.$router.push({ name: 'login' })
+    }
 
-    this.addressSelected.detail = this.userInfo.address.detail
-    this.addressSelected.county = this.userInfo.address.county
-    this.addressSelected.city = this.userInfo.address.city
-    this.addressSelected.zipcode = this.userInfo.address.zipcode
-    // this.userName =
-    console.log('userinfo', this.userInfo)
-    console.log('document.cookie', document.cookie)
-    console.log(' this.addressSelected', this.addressSelected)
-    this.handleAddressSelect()
-    this.handelBirthday()
     // window.addEventListener('scroll', this.handleScroll)
   }
 }

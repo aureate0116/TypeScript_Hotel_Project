@@ -10,12 +10,8 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
-    "module": "es2022", //ESNext
+    "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["node"],
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "types": ["node"]
   }
 }

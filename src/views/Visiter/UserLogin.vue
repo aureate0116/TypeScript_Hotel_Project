@@ -70,10 +70,10 @@
 </template>
 
 <script lang="ts">
-const apiUrl = import.meta.env.VITE_BACKEND_HOST
 import Swal from 'sweetalert2'
 
-import { mapActions, mapState } from 'pinia'
+const apiUrl = import.meta.env.VITE_BACKEND_HOST
+import { mapActions } from 'pinia'
 import { userAuthStore } from '@/stores/userAuthStore.js'
 // import { useAlertStore } from '@/stores/alertStore'
 
@@ -92,7 +92,7 @@ export default {
   methods: {
     ...mapActions(userAuthStore, ['getUserEmail']),
 
-    userLogin() {
+    userLogin() :void {
       let data = this.userAccount
       let headers = {
         'Content-Type': 'application/json',
@@ -160,7 +160,8 @@ export default {
     // console.log('rem', rem)
     if (this.getUserEmail()) {
       this.loginSetting.isRememberAccount = true
-      this.userAccount.email = this.getUserEmail()
+      const userEmail = this.getUserEmail()
+      this.userAccount.email = userEmail !== null ? userEmail : ''
     }
   }
 }

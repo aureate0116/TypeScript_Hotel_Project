@@ -6,7 +6,7 @@
 
 .user_center_banner {
   height: 200;
-   margin-top: 50px;
+  margin-top: 50px;
   padding: 40px 20px;
   background-image: url('https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/hero.png?raw=true');
   background-size: cover;
@@ -18,13 +18,13 @@
     height: 72px;
   }
   @include media-breakpoint-up(md) {
-     h1 {
-    font-size: 48px;
-  }
+    h1 {
+      font-size: 48px;
+    }
     img {
       height: 144px;
     }
-     height: 384px;
+    height: 384px;
     padding: 120px;
     // position: absolute;
     // right: 0;
@@ -55,18 +55,41 @@
   }
 }
 
-.content_left {
-  // width: 40%;
+form.content_left {
   width: 100%;
+  .content_left {
+    width: 100%;
+  }
 
   @include media-breakpoint-up(md) {
-width: 527px;
+    // width: 45%;
+  }
+}
+
+form.content_right {
+  width: 100%;
+  .content_right {
+    width: 100%;
+  }
+
+  @include media-breakpoint-up(md) {
+    // width: 100%;
+    // width: 55%;
+  }
+}
+
+.content_left {
+  // width: 40%;
+  // width: 100%;
+
+  @include media-breakpoint-up(md) {
+    // width: 45%;
   }
 }
 
 .content_right {
-width: 100%;  // width: 50%;
+  // width: 100%; // width: 50%;
   @include media-breakpoint-up(md) {
-width: 730px;
+    // width: 55%;
   }
 }
