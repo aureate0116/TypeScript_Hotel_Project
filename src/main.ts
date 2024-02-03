@@ -21,16 +21,16 @@ import * as AllRules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n'
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
 
-// interface Rules {
-//   [key: string]: any;
-// }
+interface Rules {
+  [key: string]: any;
+}
 
-// const rules: Rules = AllRules;
+const rules: Rules = AllRules;
 
 // 使用 Object.keys 設置規則
 Object.keys(AllRules).forEach((rule) => {
-  // defineRule(rule, rules[rule]);
-      defineRule(rule, (AllRules as Record<string, any>)[rule]);
+  defineRule(rule, rules[rule]);
+      // defineRule(rule, (AllRules as Record<string, any>)[rule]);
 
 });
 // Object.keys(AllRules).forEach((rule) => {
